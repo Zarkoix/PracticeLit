@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-import './app.styl';
+import Landing from './routes/Landing'
+import Directory from './routes/Directory/Directory'
 
 /**
  * The `App` component is the entry point for the react app.
@@ -12,7 +14,10 @@ export default class App extends Component {
 
     render() {
         return (
-            <h1>Welcome to React Fiber.</h1>
+            <Switch>
+              <Route exact path='/' component={Landing}/>
+              <Route path='/q' component={Directory}/>
+            </Switch>
         );
     }
 
