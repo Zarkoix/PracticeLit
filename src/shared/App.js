@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Landing from './routes/Landing'
-import Directory from './routes/Directory/Directory'
+import Directory from './routes/Directory'
+import Workspace from './routes/Workspace'
+import Unknown from './routes/Unknown'
 
 /**
  * The `App` component is the entry point for the react app.
@@ -11,14 +13,14 @@ import Directory from './routes/Directory/Directory'
  * You can start developing your react app here.
  */
 export default class App extends Component {
-
     render() {
         return (
             <Switch>
               <Route exact path='/' component={Landing}/>
               <Route path='/q' component={Directory}/>
+              <Route path='/a/:id' component={Workspace}/>
+              <Route otherwise component={Unknown}/>
             </Switch>
         );
     }
-
 }
