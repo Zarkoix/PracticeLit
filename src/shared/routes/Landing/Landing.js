@@ -7,11 +7,9 @@ import React, { Component } from 'react';
  * You can start developing your react app here.
  */
 export default class Landing extends Component {
-
   render() {
     return (
       <h1>Welcome to PracticeLit</h1>
     );
   }
-
 }

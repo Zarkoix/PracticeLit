@@ -4,6 +4,8 @@ import { flushChunkNames } from 'react-universal-component/server';
 import flushChunks from 'webpack-flush-chunks';
 
 import {StaticRouter} from 'react-router'
+import { ServerStyleSheet } from 'styled-components'; // <-- importing ServerStyleSheet
+
 
 import App from '../shared/App';
 
@@ -16,13 +18,16 @@ import App from '../shared/App';
  * @param clientStats Parameter passed by hot server middleware
  */
 export default ({ clientStats }) => async (req, res) => {
-    const app = (
+    const ClientApp = () => (
       <StaticRouter context={{}} location={req.url}>
         <App/>
       </StaticRouter>
     );
 
-    const appString = ReactDOM.renderToString(app);
+    const sheet = new ServerStyleSheet(); // <-- creating out stylesheet
+
+    const appString = ReactDOM.renderToString(sheet.collectStyles(<ClientApp />));
+    const styledComponents = sheet.getStyleTags(); // <-- getting all the tags from the sheet
     const chunkNames = flushChunkNames();
     const { js, styles, cssHash } = flushChunks(clientStats, { chunkNames });
 
@@ -30,6 +35,7 @@ export default ({ clientStats }) => async (req, res) => {
         appString,
         js,
         styles,
-        cssHash
+        cssHash,
+        styledComponents
     });
 };

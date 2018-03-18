@@ -6,13 +6,15 @@ import Directory from './routes/Directory'
 import Workspace from './routes/Workspace'
 import Unknown from './routes/Unknown'
 
+import './App.styl'
+
 /**
  * The `App` component is the entry point for the react app.
  * It is rendered on the client as well as on the server.
  *
  * You can start developing your react app here.
  */
-export default class App extends Component {
+class App extends Component {
     render() {
         return (
             <Switch>
@@ -24,3 +26,5 @@ export default class App extends Component {
         );
     }
 }
+
+export default App

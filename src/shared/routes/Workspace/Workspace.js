@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import Header from '../../components/Header.js'
+import Footer from '../../components/Footer.js'
+import TitleBar from './components/titlebar'
+
+import styled from 'styled-components'
+import { backgroundColor } from '../../theme/theme'
 
 /**
  * The `App` component is the entry point for the react app.
@@ -6,12 +12,20 @@ import React, { Component } from 'react';
  *
  * You can start developing your react app here.
  */
-export default class Workspace extends Component {
-
+class Workspace extends Component {
   render() {
     return (
-      <h1>Welcome to the answer page #todo</h1>
+      <div className={this.props.className}>
+        <Header/>
+        <TitleBar title={"Rigged Dice"} />
+        <Footer />
+      </div>
     );
   }
-
 }
+
+export default styled(Workspace)`
+  background-color: ${backgroundColor};
+  min-height: 100%;
+  height: 100%;
+`

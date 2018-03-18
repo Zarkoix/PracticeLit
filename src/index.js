@@ -5,6 +5,11 @@ import { log } from 'winston';
 import api from './server/api';
 
 /**
+ * Default port
+ */
+const defaultPort = 3002;
+
+/**
  * Configures hot reloading and assets paths for local development environment.
  * Use the `npm start` command to start the local development server.
  *
@@ -73,6 +78,6 @@ if (process.env.NODE_ENV === 'development') {
 
 log('info', 'Configuring server engine...');
 app.set('view engine', 'ejs');
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || defaultPort);
 
 app.listen(app.get('port'), () => log('info', `Server listening on port ${app.get('port')}...`));

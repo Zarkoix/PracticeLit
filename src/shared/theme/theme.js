@@ -1,5 +1,3 @@
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-
 const dracula = {
   background: "#282a36",
   currentLine: "#44475a",
@@ -15,8 +13,19 @@ const dracula = {
   yellow: "#f1fa8c"
 }
 
-export const backgroundColor = dracula.background
-export const secondaryColor = dracula.currentLine
+const monokai = {
+  background: "#272822",
+  orchid: "#F92672",
+  cyan: "#66D9EF",
+  green: "#A6E22E",
+  orange: "#FD971F"
+}
+
+export const backgroundColor = monokai.background
+export const primaryColor = monokai.orchid
+export const secondaryColor = dracula.cyan
+export const textColor = "#ECEDE8"
+
 
 export const accentColor = dracula.cyan
 export const accentColor2 = dracula.green
@@ -25,25 +34,6 @@ export const accentColor4 = dracula.pink
 export const accentColor5 = dracula.purple
 export const accentColor6 = dracula.yellow
 
-export const textColor = dracula.foreground
 
 export const errorColor = dracula.red
 export const infoColor = dracula.cyan
-export const affirmativeColor = dracula.green
-export const negativeColor = dracula.red
-
-export const muiTheme = getMuiTheme({
-  palette: {
-    textColor: dracula.foreground,
-    alternateTextColor: dracula.currentLine,
-    primary1Color: dracula.background,
-    primary2Color: dracula.selection,
-    accent1Color: dracula.cyan,
-    accent2Color: dracula.orange,
-    canvasColor: backgroundColor,
-    borderColor: dracula.comment,
-  },
-  appBar: {
-    height: 50,
-  },
-})
