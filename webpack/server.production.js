@@ -15,6 +15,7 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     output: {
         filename: 'app.server.js',
+        chunkFilename: '[name].js',
         libraryTarget: 'commonjs2'
     },
     module: {

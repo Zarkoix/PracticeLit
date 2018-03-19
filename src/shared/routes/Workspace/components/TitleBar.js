@@ -1,5 +1,5 @@
 import React from 'react'
-import { primaryColor, backgroundColor, secondaryColor } from '../../../theme/theme'
+import { backgroundColor, secondaryColor } from '../../../theme/theme'
 import styled from 'styled-components'
 
 const TitleBar = ({ className, title }) => (<div className={className}>{title}</div>)

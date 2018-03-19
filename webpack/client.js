@@ -13,7 +13,7 @@ module.exports = merge(common, {
     ],
     devtool: 'inline-source-map',
     output: {
-        filename: 'app.client.js',
+        filename: '[name].client.js',
         chunkFilename: '[name].js'
     },
     module: {
@@ -45,6 +45,7 @@ module.exports = merge(common, {
                 NODE_ENV: JSON.stringify('development')
             }
         }),
+        new webpack.HashedModuleIdsPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ]
 });

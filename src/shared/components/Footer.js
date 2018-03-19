@@ -14,4 +14,5 @@ export default styled(Footer)`
   color: ${backgroundColor};
   font-size: 12px;
   width: 100%;
+  z-index: 5;
 `
