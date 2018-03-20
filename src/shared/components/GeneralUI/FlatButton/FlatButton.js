@@ -5,7 +5,7 @@ import { backgroundColor } from '../../../theme/theme'
 
 const defaultOnClick = (e) => e.preventDefault()
 
-const FlatButton = ({className, onClick=defaultOnClick, text, type, color="white", backgroundColor="transparent", style={}}) =>
+const FlatButton = ({className, onClick=defaultOnClick, text, type, color="white", backgroundColor="transparent", big, style={}}) =>
   (<button
     className={className}
     style={{ style }}
@@ -17,11 +17,11 @@ const FlatButton = ({className, onClick=defaultOnClick, text, type, color="white
 export default styled(FlatButton)`
   background-color: transparent;
   border: 1px solid ${props => props.color};
-  border-radius: 15px;
+  border-radius: 5px;
   color: ${props => props.color};
   cursor: pointer;
   padding: 2px 15px;
-  font-size: 16px;
+  font-size: ${(props => props.big) ? '36px' : '16px' };
   transition: background-color, color 0.2s ease-in-out;
 
   &:hover {

@@ -37,3 +37,4 @@ export const accentColor6 = dracula.yellow
 
 export const errorColor = dracula.red
 export const infoColor = dracula.cyan
+export const successColor = monokai.green
