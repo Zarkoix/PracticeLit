@@ -1,15 +1,9 @@
-import React, { Component } from 'react'
+import React  from 'react'
 import PropTypes from 'prop-types'
 import FlatButton from '../../components/GeneralUI/FlatButton'
 import { withRouter } from 'react-router-dom'
 import { backgroundColor, primaryColor, textColor } from '../../theme/theme'
 
-/**
- * The `App` component is the entry point for the react app.
- * It is rendered on the client as well as on the server.
- *
- * You can start developing your react app here.
- */
 const Unknown = ({history}) => (
   <div style={{
     height: '100%',
