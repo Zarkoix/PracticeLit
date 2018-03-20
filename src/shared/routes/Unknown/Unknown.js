@@ -10,33 +10,27 @@ import { backgroundColor, primaryColor, textColor } from '../../theme/theme'
  *
  * You can start developing your react app here.
  */
-class Unknown extends Component {
-  render() {
-    return (
-      <div>
-        <div style={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          textAlign: 'center',
-          width: '50%',
-          marginLeft: '25%',
-          color: textColor
-        }}>
-          <h1>Couldn't Find That Page</h1>
-          <FlatButton
-            big
-            text={"Back to Safety!"}
-            color={primaryColor}
-            backgroundColor={backgroundColor}
-            onClick={() => this.props.history.push('/q')}
-          />
-        </div>
-      </div>
-    );
-  }
-}
+const Unknown = ({history}) => (
+  <div style={{
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    textAlign: 'center',
+    width: '50%',
+    marginLeft: '25%',
+    color: textColor
+  }}>
+    <h1>Couldn't Find That Page</h1>
+    <FlatButton
+      big
+      text={"Back to Safety!"}
+      color={primaryColor}
+      backgroundColor={backgroundColor}
+      onClick={() => history.push('/q')}
+    />
+  </div>
+)
 
 Unknown.propTypes = {
   history: PropTypes.shape({
