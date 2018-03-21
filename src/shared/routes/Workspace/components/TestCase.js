@@ -41,7 +41,7 @@ const TestCase = ({ className, testCaseName, isPassed, givenInput, expectedOutpu
   </div>)
 
 export default styled(TestCase)`
-  margin: 5% 0;
+  margin: 2% 0;
   padding: 10px 5%;
   color: ${ props => props.isPassed ? successColor : errorColor };
   font-size: 18px;

@@ -4,9 +4,10 @@ import ProblemPrompt from './components/ProblemPrompt.js'
 import LoadableEditor from './components/LoadableEditor.js'
 import Footer from '../../components/Footer.js'
 import TestCase from './components/TestCase'
+import TestsSummary from './components/TestsSummary'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { backgroundColor, primaryColor } from '../../theme/theme'
+import { textColor, backgroundColor, primaryColor } from '../../theme/theme'
 import FlatButton from '../../components/GeneralUI/FlatButton/FlatButton'
 
 // let prompt = "Suppose the following variables are defined: Indicate on each line below the output produced by each statement shown. If the statement produces more than one line of output indicate the line breaks with slashes as in a/b/c to indicate three lines of output with a followed by b followed by c. If the statement causes an error, write the word error to indicate this. "
@@ -72,6 +73,8 @@ class Workspace extends Component {
     return (
       <div className={this.props.className}>
         <TitleBar
+          color={backgroundColor}
+          textColor={textColor}
           title={"Rigged Dice" + (this.state.done ? " ✅" : "")}
           elementLeft={<Link to="/q">🔥</Link>}
         />
@@ -79,7 +82,9 @@ class Workspace extends Component {
           padding: '5% 7%'
         }}>
           <ProblemPrompt promptText={this.state.problemPrompt} />
-          { canUseDOM && <LoadableEditor /> }
+          <div>
+            { canUseDOM && <LoadableEditor /> }
+          </div>
           <div style={{
             margin: '5% 0',
             display: 'flex',
@@ -93,9 +98,7 @@ class Workspace extends Component {
               big
             />
           </div>
-          {this.state.testCasesPassed > 0 || this.state.testCasesFailed > 0 &&
-            <div>{this.state.testCasesPassed}/{this.state.testCasesFailed} Test Cases Passed</div>
-          }
+          <TestsSummary testsPassed={this.state.testCasesPassed} testsFailed={this.state.testCasesFailed} />
           {this.state.testCaseInfo.map((c) =>
             <TestCase
               key={c.name}

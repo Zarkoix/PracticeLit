@@ -26,15 +26,7 @@ export const primaryColor = monokai.orchid
 export const secondaryColor = dracula.cyan
 export const textColor = "#ECEDE8"
 
-
-export const accentColor = dracula.cyan
-export const accentColor2 = dracula.green
-export const accentColor3 = dracula.orange
-export const accentColor4 = dracula.pink
-export const accentColor5 = dracula.purple
-export const accentColor6 = dracula.yellow
-
-
 export const errorColor = dracula.red
 export const infoColor = dracula.cyan
 export const successColor = monokai.green
+export const green = monokai.green;

@@ -2,8 +2,8 @@ import React from 'react'
 import { backgroundColor, secondaryColor } from '../../theme/theme'
 import styled from 'styled-components'
 
-const TitleBar = ({ className, title, elementLeft=null }) =>
-  (<div className={className}>
+const TitleBar = ({ textColor=backgroundColor, color=secondaryColor, className, title, elementLeft=null }) =>
+  <div className={className}>
     {elementLeft &&
       <span style={{
         float: 'left'
@@ -12,12 +12,12 @@ const TitleBar = ({ className, title, elementLeft=null }) =>
       </span>
     }
     {title}
-  </div>)
+  </div>
 
 export default styled(TitleBar)`
   padding: 10px;
-  background-color: ${secondaryColor};
-  color: ${backgroundColor};
+  background-color: ${props => props.color};
+  color: ${props => props.textColor};
   font-size: 24px;
   text-align: center;
 `
