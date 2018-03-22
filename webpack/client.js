@@ -39,7 +39,7 @@ module.exports = merge(common, {
         new webpack.optimize.CommonsChunkPlugin({
           names: ['bootstrap'], // needed to put webpack bootstrap code before chunks
           filename: '[name].js',
-            minChunks: Infinity
+          minChunks: Infinity
         }),
         new webpack.DefinePlugin({
             'process.env': {
@@ -48,8 +48,6 @@ module.exports = merge(common, {
         }),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new BundleAnalyzerPlugin({
-          analyzerPort: 8888
-        })
+        // new BundleAnalyzerPlugin({ analyzerPort: 8888 })
     ]
 });
