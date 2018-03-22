@@ -1,15 +1,36 @@
-import React, { Component } from 'react';
+import React from "react";
+import PropTypes from 'prop-types'
+import { withRouter } from "react-router-dom";
+import FlatButton from '../../components/GeneralUI/FlatButton'
+import { backgroundColor, primaryColor, textColor } from '../../theme/theme'
 
-/**
- * The `App` component is the entry point for the react app.
- * It is rendered on the client as well as on the server.
- *
- * You can start developing your react app here.
- */
-export default class Landing extends Component {
-  render() {
-    return (
-      <h1>Welcome to PracticeLit</h1>
-    );
-  }
-}
+const Landing = ({history}) =>
+  <div
+    style={{
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      textAlign: "center",
+      width: "50%",
+      marginLeft: "25%",
+      color: textColor
+    }}
+  >
+    <h1>Welcome to PracticeLit🔥</h1>
+    <FlatButton
+      big
+      text={"To Directory!"}
+      color={primaryColor}
+      backgroundColor={backgroundColor}
+      onClick={() => history.push("/q")}
+    />
+  </div>
+
+Landing.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
+};
+
+export default withRouter(Landing);

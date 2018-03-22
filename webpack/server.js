@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const common = require('./common');
 const join = require('path').join;
 const nodeExternals = require('../scripts/node-externals');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
     name: 'server',
@@ -39,6 +40,9 @@ module.exports = merge(common, {
         }),
         new webpack.optimize.LimitChunkCountPlugin({
             maxChunks: 1
-        })
+        }),
+      new BundleAnalyzerPlugin({
+        analyzerPort: 8889
+      })
     ]
 });

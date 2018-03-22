@@ -67,10 +67,12 @@ class DirectoryNode extends Component {
 export default styled(DirectoryNode)`
   .linkQuestion {
     cursor: pointer;
+    display: block;
   }
   
   .linkDirectory {
     cursor: s-resize;
+    display: block;
   }
   
   .linkQuestion:hover {

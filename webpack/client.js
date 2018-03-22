@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const common = require('./common');
 const join = require('path').join;
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
     name: 'client',
@@ -36,8 +37,8 @@ module.exports = merge(common, {
     plugins: [
         new ExtractCssChunks(),
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['bootstrap'], // needed to put webpack bootstrap code before chunks
-            filename: '[name].js',
+          names: ['bootstrap'], // needed to put webpack bootstrap code before chunks
+          filename: '[name].js',
             minChunks: Infinity
         }),
         new webpack.DefinePlugin({
@@ -46,6 +47,9 @@ module.exports = merge(common, {
             }
         }),
         new webpack.HashedModuleIdsPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new BundleAnalyzerPlugin({
+          analyzerPort: 8888
+        })
     ]
 });
