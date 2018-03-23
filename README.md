@@ -1,7 +1,17 @@
 # PraticeLit
 A modern version of PracticeIt designed to operate smoother and scale better
 
-# Licenses
+# Installation and Usage
+
+Use `npm i` to grab all the dependencies
+
+Then `npm start` to start the dev server
+
+# Building Production Bundles
+
+`npm build` builds all, `npm build:(client/server/node)` for individual pieces
+
+# Dependency Licenses not present in node_modules/
 [rherwig/template-react-16-ssr](https://github.com/rherwig/template-react-16-ssr/blob/feature/express-routing/LICENSE)
 
 > Copyright 2017 SHOPMACHER eCommerce GmbH & Co. KG
