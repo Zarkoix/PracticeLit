@@ -20,4 +20,5 @@ export default styled(TitleBar)`
   color: ${props => props.textColor};
   font-size: 24px;
   text-align: center;
+  font-weight: 100;
 `
