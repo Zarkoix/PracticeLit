@@ -8,54 +8,16 @@ class Directory extends Component {
   constructor() {
     super();
     this.state = {
-      directory:
-        [
-          {
-            name: 'Variables',
-            isQuestion: false,
-            id: '1',
-            children: [
-              {
-                name: 'Question A',
-                isQuestion: true,
-                completed: false,
-                id: '2'
-              }, {
-                name: 'Control Structures',
-                isQuestion: false,
-                completed: false,
-                id: '3',
-                children: [{
-                  name: 'for loop',
-                  isQuestion: true,
-                  completed: false,
-                  id: 'a'
-                }, {
-                  name: 'for each loop',
-                  isQuestion: true,
-                  completed: false,
-                  id: 'b'
-                }, {
-                  name: 'while loop',
-                  isQuestion: true,
-                  completed: true,
-                  id: 'c'
-                }
-              ]
-          }, {
-            name: 'Question 5',
-            isQuestion: true,
-            completed: false,
-            id: '5'
-          }]
-          }, {
-            name: 'Question 5',
-            isQuestion: true,
-            completed: true,
-            id: '5'
-          }
-        ]
+      directory: []
     }
+  }
+
+  componentDidMount() {
+    fetch('/api/r/').then(res => res.json()).then(res => {
+      this.setState({
+        directory: res.directory
+      })
+    })
   }
 
   render() {

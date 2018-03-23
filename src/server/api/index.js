@@ -1,12 +1,12 @@
 import express from 'express';
-import users from './users';
+import repository from './repository';
 
 const router = express.Router();
 
 /**
- * Includes the users routes as a middleware.
- * The users routes will be accessible from /api/users inside the browser.
+ * Includes the /api routes as a middleware.
+ * The api routes will be accessible from /api/ inside the browser.
  */
-router.use('/users', users);
+router.use('/r', repository);
 
 export default router;

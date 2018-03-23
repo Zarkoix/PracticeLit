@@ -18,11 +18,10 @@ import App from '../shared/App';
  * @param clientStats Parameter passed by hot server middleware
  */
 export default ({ clientStats }) => async (req, res) => {
-    const ClientApp = () => (
+    const ClientApp = () =>
       <StaticRouter context={{}} location={req.url}>
         <App/>
       </StaticRouter>
-    );
 
     const sheet = new ServerStyleSheet(); // <-- creating out stylesheet
 
