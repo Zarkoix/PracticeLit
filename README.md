@@ -1,6 +1,9 @@
 # PraticeLit
 A modern version of PracticeIt designed to operate smoother and scale better
 
+# Architecture
+![project diagram](Design/arch.png)
+
 # Installation and Usage
 
 Use `npm i` to grab all the dependencies
