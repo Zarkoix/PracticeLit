@@ -6,9 +6,8 @@ let sendToQueue;
 // but it theoretically should never be called because server is still booting up
 rmq.initialize('q_submit', (s2q) => sendToQueue = s2q);
 
-
-router.get('/', async (req, res) => {
-  sendToQueue('hellooo') // TODO send real data
+router.get('/:content', async (req, res) => {
+  sendToQueue(decodeURIComponent(req.params.content));
   return res.status(200).json({ // TODO return a confirmed message
     testCasesPassed: 1,
     testCasesFailed: 1,

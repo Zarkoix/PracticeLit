@@ -6,14 +6,14 @@ import AceEditor from 'react-ace';
 import 'brace/mode/java';
 import 'brace/theme/monokai';
 
-const Editor = ({className, editorContents, update, name}) => {
+const Editor = ({className, editorContents, onChange, name}) => {
   return <AceEditor
     className={className}
     mode="java"
     theme="monokai"
     name={name ? name : "AceEditor"}
     onLoad={() => {}}
-    onChange={update}
+    onChange={onChange}
     fontSize={14}
     showPrintMargin={true}
     showGutter={true}

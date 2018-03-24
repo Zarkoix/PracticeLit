@@ -31,9 +31,13 @@ class Workspace extends Component {
   }
 
   submit = () => {
-    fetch('/api/submit/').then(r => r.json()).then(r => this.setState({
-      tests: r
-    }))
+    const endpoint = '/api/submit/' + encodeURIComponent(this.state.solutionText);
+    console.log(endpoint)
+    fetch(endpoint)
+      .then(r => r.json())
+      .then(r => this.setState({
+        tests: r
+      }))
   }
 
   render () {
@@ -52,7 +56,9 @@ class Workspace extends Component {
         }}>
           <ProblemPrompt promptText={this.state.problemPrompt}/>
           <div>
-            {canUseDOM && <LoadableEditor/>}
+            {canUseDOM && <LoadableEditor editorContents={this.state.solutionText} onChange={e => this.setState({
+              solutionText: e // if there's performance issues, turn re-render on solutionText change off
+            })}/>}
           </div>
           <div style={{
             margin: '5% 0',
