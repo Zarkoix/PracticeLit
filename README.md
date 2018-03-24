@@ -2,6 +2,7 @@
 A modern version of PracticeIt designed to operate smoother and scale better
 
 # Architecture
+(yes this is probably overkill, but this is primarily to learn new technologies)
 ![project diagram](Design/arch.png)
 
 # Installation and Usage
