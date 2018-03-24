@@ -30,8 +30,8 @@ class Workspace extends Component {
     }))
   }
 
-  submit () {
-    fetch('/api/submit').then(r => r.json()).then(r => this.setState({
+  submit = () => {
+    fetch('/api/submit/').then(r => r.json()).then(r => this.setState({
       tests: r
     }))
   }
@@ -47,7 +47,8 @@ class Workspace extends Component {
           elementLeft={<Link to="/q">🔥</Link>}
         />
         <div style={{
-          padding: '1% 7%'
+          padding: '1% 7%',
+          marginBottom: '5%'
         }}>
           <ProblemPrompt promptText={this.state.problemPrompt}/>
           <div>
@@ -66,22 +67,23 @@ class Workspace extends Component {
               big
             />
           </div>
-          {this.state.tests ? [
-            <TestsSummary testsPassed={this.state.tests.testCasesPassed}
-                          testsFailed={this.state.tests.testCasesFailed}/>,
+          {this.state.tests ?
             <div>
-              {this.state.tests.testCaseInfo.map((c) =>
-                <TestCase
-                  key={c.name}
-                  testCaseName={c.name}
-                  isPassed={c.isPassed}
-                  givenInput={c.givenInput}
-                  expectedOutput={c.expectedOutput}
-                  givenOutput={c.givenOutput}
-                />
-              )}
-            </div>
-          ] : null }
+              <TestsSummary testsPassed={this.state.tests.testCasesPassed}
+                          testsFailed={this.state.tests.testCasesFailed}/>
+              <div>
+                {this.state.tests.testCaseInfo.map((c) =>
+                  <TestCase
+                    key={c.name}
+                    testCaseName={c.name}
+                    isPassed={c.isPassed}
+                    givenInput={c.givenInput}
+                    expectedOutput={c.expectedOutput}
+                    givenOutput={c.givenOutput}
+                  />
+                )}
+              </div>
+            </div> : null }
         </div>
         <Footer/>
       </div>

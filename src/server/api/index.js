@@ -9,6 +9,6 @@ const router = express.Router();
  * The api routes will be accessible from /api/ inside the browser.
  */
 router.use('/r', repository);
-router.use('submit', submit);
+router.use('/submit', submit);
 
 export default router;
