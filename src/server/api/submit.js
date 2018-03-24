@@ -1,10 +1,15 @@
 import express from 'express';
-
+import rmq from '../rabbitmq';
 const router = express.Router();
+let sendToQueue;
+// this is async so their is a time when sendToQueue is undefined,
+// but it theoretically should never be called because server is still booting up
+rmq.initialize('q_submit', (s2q) => sendToQueue = s2q);
+
 
 router.get('/', async (req, res) => {
-  console.log('submit')
-  return res.status(200).json({
+  sendToQueue('hellooo') // TODO send real data
+  return res.status(200).json({ // TODO return a confirmed message
     testCasesPassed: 1,
     testCasesFailed: 1,
     testCaseInfo: [{
