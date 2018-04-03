@@ -1,14 +1,23 @@
 import React, { Component } from 'react'
-import TitleBar from '../../components/GeneralUI/TitleBar.js'
+
+// library components
+import { Link } from 'react-router-dom'
+
+// higher order components
+import styled from 'styled-components'
+import socket from '../../components/Socket'
+
+// specific custom components
 import ProblemPrompt from './components/ProblemPrompt.js'
 import LoadableEditor from './components/LoadableEditor.js'
-import Footer from '../../components/Footer.js'
 import TestCase from './components/TestCase'
 import TestsSummary from './components/TestsSummary'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+
+// general custom components
 import { textColor, backgroundColor, primaryColor } from '../../theme/theme'
+import TitleBar from '../../components/GeneralUI/TitleBar.js'
 import FlatButton from '../../components/GeneralUI/FlatButton/FlatButton'
+import Footer from '../../components/Footer.js'
 
 class Workspace extends Component {
   constructor (props) {
@@ -18,7 +27,8 @@ class Workspace extends Component {
       done: true,
       loaded: false,
       problemPrompt: '',
-      solutionText: '',
+      solutionText: 'public class HelloWorld {\n\tpublic static int add1(int a) { return a + 1; }\n}',
+      solutionProcessing: null,
       tests: null
     }
   }
@@ -32,12 +42,15 @@ class Workspace extends Component {
 
   submit = () => {
     const endpoint = '/api/submit/' + encodeURIComponent(this.state.solutionText);
-    console.log(endpoint)
-    fetch(endpoint)
-      .then(r => r.json())
-      .then(r => this.setState({
-        tests: r
-      }))
+    fetch(endpoint).then(r => {
+      if (r.status === 200) {
+        this.setState({
+          solutionProcessing: true
+        })
+      } else {
+        alert('An error has occurred, sorry :(')
+      }
+    })
   }
 
   render () {
@@ -47,7 +60,6 @@ class Workspace extends Component {
         <TitleBar
           color={backgroundColor}
           textColor={textColor}
-          title={'Rigged Dice' + (this.state.done ? ' ✅' : '')}
           elementLeft={<Link to="/q">🔥</Link>}
         />
         <div style={{
@@ -73,6 +85,7 @@ class Workspace extends Component {
               big
             />
           </div>
+          {this.state.solutionProcessing && <h2>Your Solution is being processed...</h2>}
           {this.state.tests ?
             <div>
               <TestsSummary testsPassed={this.state.tests.testCasesPassed}
@@ -97,7 +110,7 @@ class Workspace extends Component {
   }
 }
 
-export default styled(Workspace)`
+export default styled(socket(Workspace))`
   background-color: ${backgroundColor};
   min-height: 100%;
   height: 100%;

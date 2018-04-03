@@ -1,13 +1,14 @@
-import express from 'express';
-import { join } from 'path';
-import { log } from 'winston';
+import express from 'express'
+import http from 'http'
+import { join } from 'path'
+import { log } from 'winston'
 
-import api from './server/api';
+import api from './server/api'
 
 /**
  * Default port
  */
-const defaultPort = 3002;
+const defaultPort = 3002
 
 /**
  * Configures hot reloading and assets paths for local development environment.
@@ -16,25 +17,25 @@ const defaultPort = 3002;
  * @param app Express app
  */
 const configureDevelopment = app => {
-    const clientConfig = require('../webpack/client');
-    const serverConfig = require('../webpack/server');
-    const publicPath = clientConfig.output.publicPath;
-    const outputPath = clientConfig.output.path;
+  const clientConfig = require('../webpack/client')
+  const serverConfig = require('../webpack/server')
+  const publicPath = clientConfig.output.publicPath
+  const outputPath = clientConfig.output.path
 
-    const multiCompiler = require('webpack')([clientConfig, serverConfig]);
-    const clientCompiler = multiCompiler.compilers[0];
+  const multiCompiler = require('webpack')([clientConfig, serverConfig])
+  const clientCompiler = multiCompiler.compilers[0]
 
-    app.use(require('webpack-dev-middleware')(multiCompiler, {publicPath}));
-    app.use(require('webpack-hot-middleware')(clientCompiler));
+  app.use(require('webpack-dev-middleware')(multiCompiler, {publicPath}))
+  app.use(require('webpack-hot-middleware')(clientCompiler))
 
-    app.use(publicPath, express.static(outputPath));
+  app.use(publicPath, express.static(outputPath))
 
-    app.use(require('webpack-hot-server-middleware')(multiCompiler, {
-        serverRendererOptions: { outputPath }
-    }));
+  app.use(require('webpack-hot-server-middleware')(multiCompiler, {
+    serverRendererOptions: {outputPath}
+  }))
 
-    app.set('views', join(__dirname, '../public/views'));
-};
+  app.set('views', join(__dirname, '../public/views'))
+}
 
 /**
  * Configures assets paths for production environment.
@@ -44,21 +45,21 @@ const configureDevelopment = app => {
  * @param app Express app
  */
 const configureProduction = app => {
-    const clientStats = require('./assets/stats.json');
-    const serverRender = require('./assets/app.server.js').default;
-    const publicPath = '/';
-    const outputPath = join(__dirname, 'assets');
+  const clientStats = require('./assets/stats.json')
+  const serverRender = require('./assets/app.server.js').default
+  const publicPath = '/'
+  const outputPath = join(__dirname, 'assets')
 
-    app.use(publicPath, express.static(outputPath));
-    app.use(serverRender({
-        clientStats,
-        outputPath
-    }));
+  app.use(publicPath, express.static(outputPath))
+  app.use(serverRender({
+    clientStats,
+    outputPath
+  }))
 
-    app.set('views', join(__dirname, 'views'));
-};
+  app.set('views', join(__dirname, 'views'))
+}
 
-const app = express();
+const app = express()
 
 /**
  * Includes the API/express routes as a middleware to enable express routing.
@@ -66,18 +67,21 @@ const app = express();
  * since the react router is supposed to handle all other requests that are
  * not handles by an api.
  */
-log('info', 'Configuring express routes...');
-app.use('/api', api);
+log('info', 'Configuring express routes...')
+app.use('/api', api)
 
-log('info', `Configuring server for environment: ${process.env.NODE_ENV}...`);
+log('info', `Configuring server for environment: ${process.env.NODE_ENV}...`)
 if (process.env.NODE_ENV === 'development') {
-    configureDevelopment(app);
+  configureDevelopment(app)
 } else {
-    configureProduction(app);
+  configureProduction(app)
 }
 
-log('info', 'Configuring server engine...');
-app.set('view engine', 'ejs');
-app.set('port', process.env.PORT || defaultPort);
+log('info', 'Configuring server engine...')
+app.set('view engine', 'ejs')
+app.set('port', process.env.PORT || defaultPort)
 
-app.listen(app.get('port'), () => log('info', `Server listening on port ${app.get('port')}...`));
+import ws from './server/ws'
+ws.start(http.createServer(app))
+
+app.listen(app.get('port'), () => log('info', `Server listening on port ${app.get('port')}...`))

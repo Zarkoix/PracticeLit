@@ -49,7 +49,8 @@ const directoryData = {
       id: '5'
     }],
   idToPrompt: {
-    1: `<p>Write a method countMultiples that could be added to the IntTree class from lecture and section. The method returns a count of the number of multiples of a particular value in the binary tree. Given a number n, a value m is considered a multiple of n if it can be expressed as (k * n) for some integer k. For example, suppose that an IntTree variable tree stores a reference to the following tree:</p>
+    1: `<h1>Rigged Dice</h1>
+<p>Write a method countMultiples that could be added to the IntTree class from lecture and section. The method returns a count of the number of multiples of a particular value in the binary tree. Given a number n, a value m is considered a multiple of n if it can be expressed as (k * n) for some integer k. For example, suppose that an IntTree variable tree stores a reference to the following tree:</p>
 <p>The table below shows various calls and the values they should return:</p>
 <table >
     <thead>

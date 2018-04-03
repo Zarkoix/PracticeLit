@@ -7,6 +7,7 @@ import Workspace from './routes/Workspace'
 import Unknown from './routes/Unknown'
 
 import './App.styl'
+import SocketProvider from './components/SocketProvider'
 
 /**
  * The `App` component is the entry point for the react app.
@@ -17,12 +18,14 @@ import './App.styl'
 class App extends Component {
     render() {
         return (
+          <SocketProvider>
             <Switch>
               <Route exact path='/' component={Landing}/>
               <Route path='/q' component={Directory}/>
               <Route path='/a/:id' component={Workspace}/>
               <Route otherwise component={Unknown}/>
             </Switch>
+          </SocketProvider>
         );
     }
 }
