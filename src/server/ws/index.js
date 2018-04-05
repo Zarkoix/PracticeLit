@@ -8,30 +8,38 @@ import { log } from 'winston'
  }
  */
 let c = {}
+let map = {}
 
 export default {
-  start: function (server) {
+  /**
+   * starts the WebSocket server on the specified port
+   * @param server the express server
+   * @param port the port to run it on
+   */
+  start: function (server, port) {
     log('info', '[WSS] WSS initializing')
-    /**
-     * a structure mapping sessionIDs to their web socket connection
-     {
-       1: ws1,
-       
-     }
+    /* a structure mapping sessionIDs to their web socket connection
+       {
+         1: WebSocket,
+       }
      */
-    const map = {}
 
-    const port = 8080
     const wss = new WebSocket.Server({ server, port })
     log('info', '[WSS] WSS ready on ' + port)
 
     let nextID = 0
+
+    /**
+     * when a connection is created give it an ID and store it in the map based on its ID, increment the nextID and
+     * setup the necessary heartbeat and message callbacks for it
+     */
     wss.on('connection', function connection (ws, req) {
       log('info', '[WSS] WS connection created, given ID ' + nextID)
       req.id = nextID
       ws.id = nextID // give the ws an ID
-      nextID++ // increment ID pool
-      map[ws.id] = ws // place the websocket in the map
+      // TODO revert id fix when ids are properly allocated
+      // nextID++ // increment ID pool
+      map[ws.id] = ws // place the websocket in the map based on its session id
 
       ws.isAlive = true // for use by heartbeat protocol to check status of sockets
 
@@ -54,7 +62,7 @@ export default {
             if (c[message.type]) {
               // is there a type?
               // if so call the wsManager for that module with the packet
-              c[message.type](message, ws, map[ws.username])
+              c[message.type](message, ws)
             } else {
               log('info', '[WSS] no route for ' + message.type + ' exists')
             }
@@ -65,6 +73,7 @@ export default {
        * a WS lost a connection, so lets remove it from the session map
        */
       ws.on('close', function close () {
+        console.log('closed ws id ' + ws.id)
         delete map[ws.id]
       })
     })
@@ -94,6 +103,27 @@ export default {
     }, 30000)
   },
 
+  /**
+   * sends a message to a specific ws based on a session ID
+   *
+   * @param id the session to send a message to
+   * @param message the message, which will be Stringify'd
+   */
+  send: function (id, message) {
+    if (map[id]) {
+      console.log("sending message to " + id)
+      map[id].send(JSON.stringify(message))
+    } else {
+      console.log("message lost :(")
+    }
+  },
+
+  /**
+   * Registers a function to be called whenever the 'type' field of a received websocket message matches the 'route'
+   *
+   * @param route the String to match
+   * @param f the function to be with the route when the a message for it is received
+   */
   use: function (route, f) {
     log('info', '[WSS] registering route WS route: ' + route)
     c[route] = f

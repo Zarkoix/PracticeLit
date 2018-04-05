@@ -33,12 +33,24 @@ class Workspace extends Component {
     }
   }
 
+  receivedTestInfo = ({ questionID, testInfo }) => {
+    if (Number(questionID) === Number(this.state.qId)) {
+      this.setState({
+        tests: testInfo,
+        solutionProcessing: false
+      })
+    } else {
+      console.log('[ERROR] received test info for a different question than is open')
+    }
+  }
 
   componentDidMount() {
     fetch('/api/r/' + this.state.qId).then(r => r.text()).then(r => this.setState({
       problemPrompt: r
     }))
+    this.props.socket.registerType('TestInfo', this.receivedTestInfo)
   }
+
 
   submit = () => {
     const endpoint = '/api/submit/' + encodeURIComponent(this.state.solutionText);
@@ -88,8 +100,11 @@ class Workspace extends Component {
           {this.state.solutionProcessing && <h2>Your Solution is being processed...</h2>}
           {this.state.tests ?
             <div>
-              <TestsSummary testsPassed={this.state.tests.testCasesPassed}
-                          testsFailed={this.state.tests.testCasesFailed}/>
+              <TestsSummary
+                testErrorInfo={this.state.tests.testErrorInfo}
+                testsPassed={this.state.tests.testCasesPassed}
+                testsFailed={this.state.tests.testCasesFailed}
+              />
               <div>
                 {this.state.tests.testCaseInfo.map((c) =>
                   <TestCase

@@ -82,6 +82,6 @@ app.set('view engine', 'ejs')
 app.set('port', process.env.PORT || defaultPort)
 
 import ws from './server/ws'
-ws.start(http.createServer(app))
+ws.start(http.createServer(app), 8080)
 
 app.listen(app.get('port'), () => log('info', `Server listening on port ${app.get('port')}...`))

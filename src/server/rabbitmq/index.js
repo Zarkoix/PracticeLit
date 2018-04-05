@@ -17,12 +17,11 @@ amqp.connect('amqp://localhost', function (err, conn) {
     ch.assertQueue(qName, {durable: false})
     log('info', '[rabbit] Waiting for messages in ' + qName)
     ch.consume(qName, function (msg) {
-      log('info', '[rabbit] Received ' + msg.content.toString())
       for (let i = 0; i < testQueueConsumers.length; i++) {
         testQueueConsumers[i](msg.content.toString())
       }
-      // ch.ack(msg)
-    }, {noAck: true})
+      ch.ack(msg)
+    }, {noAck: false})
   })
 })
 
@@ -40,5 +39,5 @@ export default {
       // setTimeout(function() { conn.close(); process.exit(0) }, 500);
     })
   },
-  resgisterNewTestQueueConsumer: (r) => testQueueConsumers.push(r)
+  registerNewTestQueueConsumer: (r) => testQueueConsumers.push(r)
 }
