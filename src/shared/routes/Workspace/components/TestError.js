@@ -2,11 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { errorColor } from '../../../theme/theme'
 
-const TestError = ({name, reason, className}) =>
+const TestError = ({reason, className}) =>
   (<div className={className}>
     <div className="errorIcon">⚠️</div>
     <div className="errorText">
-      <h4>{name}</h4>
       <p>{reason}</p>
     </div>
 
@@ -27,7 +26,7 @@ export default styled(TestError)`
   .errorText {
   }
   
-  h4, p {
+  p {
     margin: 0
   }
 `

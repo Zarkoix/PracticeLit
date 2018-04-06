@@ -24,7 +24,7 @@ export default {
        }
      */
 
-    const wss = new WebSocket.Server({ server, port })
+    const wss = new WebSocket.Server({server, port})
     log('info', '[WSS] WSS ready on ' + port)
 
     let nextID = 0
@@ -49,6 +49,9 @@ export default {
        */
       ws.on('pong', heartbeat)
 
+      /**
+       * handles message reception, forwards to appropriate handler, otherwise logs a lack of route for the type
+       */
       ws.on('message', function incoming (message) {
         message = JSON.parse(message)
         switch (message.type) {
@@ -111,10 +114,9 @@ export default {
    */
   send: function (id, message) {
     if (map[id]) {
-      console.log("sending message to " + id)
       map[id].send(JSON.stringify(message))
     } else {
-      console.log("message lost :(")
+      console.log('message lost, ' + id + ' disconnected before server\'s response')
     }
   },
 

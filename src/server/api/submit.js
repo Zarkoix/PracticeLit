@@ -9,7 +9,6 @@ let sendToQueue
 // but it theoretically should never be called because server is still booting up
 rmq.initialize('q_submit', (s2q) => sendToQueue = s2q)
 rmq.registerNewTestQueueConsumer(function (msg) {
-  console.log('message from rmq: ' + msg)
   const parts = msg.split(' ')
   const id = parts.shift()
   const questionID = parts.shift()
@@ -19,6 +18,18 @@ rmq.registerNewTestQueueConsumer(function (msg) {
     testInfo: JSON.parse(parts.join(' ')) // TODO ensure that the testinfo is not getting parsed and restringified
   }
   ws.send(id, message)
+})
+
+/**
+ * when 'TestCode' WebSocket data is received send it to the queue
+ */
+ws.use('TestCode', (msg, { id }) => {
+  console.log('received code from client')
+  sendToQueue(id + " " + msg.questionID + " " + msg.code)
+  ws.send(id, { // send confirmation packet to the client
+    type: 'CodeReceived',
+    questionID: msg.questionID
+  })
 })
 
 router.get('/:content', async (req, res) => {

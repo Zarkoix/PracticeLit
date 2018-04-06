@@ -48,13 +48,26 @@ class Workspace extends Component {
     fetch('/api/r/' + this.state.qId).then(r => r.text()).then(r => this.setState({
       problemPrompt: r
     }))
+
     this.props.socket.registerType('TestInfo', this.receivedTestInfo)
+    this.props.socket.registerType('CodeReceived', () => this.setState({
+      solutionProcessing: true
+    }))
   }
 
 
   submit = () => {
-    const endpoint = '/api/submit/' + encodeURIComponent(this.state.solutionText);
-    fetch(endpoint).then(r => {
+    // const endpoint = '/api/submit/' + encodeURIComponent(this.state.solutionText);
+    this.setState({
+      tests: null
+    })
+
+    this.props.socket.send(JSON.stringify({
+      type: 'TestCode',
+      questionID: this.state.qId,
+      code: this.state.solutionText
+    }))
+    /*fetch(endpoint).then(r => {
       if (r.status === 200) {
         this.setState({
           solutionProcessing: true
@@ -62,7 +75,7 @@ class Workspace extends Component {
       } else {
         alert('An error has occurred, sorry :(')
       }
-    })
+    })*/
   }
 
   render () {

@@ -6,7 +6,7 @@ import TestError from './TestError'
 const TestsSummary = ({testErrorInfo, testsPassed, testsFailed, className}) =>
   (<div className={className}>
     {testErrorInfo && testErrorInfo.map((e, i) =>
-      <TestError key={i} name={e.name} reason={e.reason} />
+      <TestError key={i} reason={e.reason} />
     )}
     {(testsPassed > 0 || testsFailed > 0) &&
       <div>
