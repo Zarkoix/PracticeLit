@@ -1,8 +1,13 @@
 # PraticeLit
 A modern version of PracticeIt designed to operate smoother and scale better
 
+# Related Repos
+
+The Java test runner (shown in the above diagram) can be found [here](https://github.com/Zarkoix/PracticeLitJavaTestRunner/tree/master).
+
 # Architecture
-(yes this is probably overkill, but this is primarily to learn new technologies)
+This repo contains the Client and NodeJS code.
+
 ![project diagram](Design/arch.png)
 
 # Installation and Usage
