@@ -5,28 +5,37 @@ import { backgroundColor } from '../../../theme/theme'
 
 const defaultOnClick = (e) => e.preventDefault()
 
-const FlatButton = ({className, onClick=defaultOnClick, text, type, color="white", backgroundColor="transparent", big, style={}}) =>
+const FlatButton = ({className, text, type,
+                      onClick=defaultOnClick,
+                      color="white",
+                      backgroundColor="transparent",
+                      big=false,
+                      disabled=false,
+                      disabledColor='grey',
+                      style={}}) =>
   (<button
     className={className}
     style={{ style }}
-    onClick={onClick}
+    onClick={() => {
+      if (!disabled) onClick()
+    }}
     type={type}
   > {text} </button>)
 
 
 export default styled(FlatButton)`
   background-color: transparent;
-  border: 1px solid ${props => props.color};
+  border: 1px solid ${props => !props.disabled ? props.color : props.disabledColor};
   border-radius: 5px;
-  color: ${props => props.color};
-  cursor: pointer;
+  color: ${props => !props.disabled ? props.color : props.disabledColor};
+  cursor: ${props => !props.disabled ? 'pointer' : 'not-allowed'};
   padding: 2px 15px;
   font-size: ${(props => props.big) ? '36px' : '16px' };
   transition: background-color, color 0.2s ease-in-out;
 
   &:hover {
-    background-color: ${props => props.color};
-    color: ${props => props.backgroundColor};
+      background-color: ${props => !props.disabled ? props.color : 'transparent'};
+      color: ${props => !props.disabled ? props.backgroundColor : props.disabledColor};
   }
 `
 
@@ -36,5 +45,7 @@ FlatButton.propTypes = {
   type: PropTypes.string,
   color: PropTypes.string,
   backgroundColor: PropTypes.string,
+  disabled: PropTypes.bool,
+  disabledColor: PropTypes.string,
   style: PropTypes.object
 }

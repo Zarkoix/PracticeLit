@@ -12,6 +12,7 @@ rmq.registerNewTestQueueConsumer(function (msg) {
   const parts = msg.split(' ')
   const id = parts.shift()
   const questionID = parts.shift()
+  console.log('sending TestInfo to client (' + id + ')')
   const message = {
     type: 'TestInfo',
     questionID: questionID,
@@ -24,7 +25,7 @@ rmq.registerNewTestQueueConsumer(function (msg) {
  * when 'TestCode' WebSocket data is received send it to the queue
  */
 ws.use('TestCode', (msg, { id }) => {
-  console.log('received code from client')
+  console.log('received TestCode from client (' + id + ')')
   sendToQueue(id + " " + msg.questionID + " " + msg.code)
   ws.send(id, { // send confirmation packet to the client
     type: 'CodeReceived',

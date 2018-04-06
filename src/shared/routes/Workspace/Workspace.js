@@ -28,7 +28,7 @@ class Workspace extends Component {
       loaded: false,
       problemPrompt: '',
       solutionText: 'public class HelloWorld {\n\tpublic static int add1(int a) { return a + 1; }\n}',
-      solutionProcessing: null,
+      solutionProcessing: false,
       tests: null
     }
   }
@@ -67,15 +67,6 @@ class Workspace extends Component {
       questionID: this.state.qId,
       code: this.state.solutionText
     }))
-    /*fetch(endpoint).then(r => {
-      if (r.status === 200) {
-        this.setState({
-          solutionProcessing: true
-        })
-      } else {
-        alert('An error has occurred, sorry :(')
-      }
-    })*/
   }
 
   render () {
@@ -103,14 +94,14 @@ class Workspace extends Component {
             justifyContent: 'center'
           }}>
             <FlatButton
-              text="Submit Code"
+              text={this.state.solutionProcessing ? 'Processing...' : 'Submit Code'}
               color={primaryColor}
               backgroundColor={backgroundColor}
               onClick={this.submit}
+              disabled={this.state.solutionProcessing}
               big
             />
           </div>
-          {this.state.solutionProcessing && <h2>Your Solution is being processed...</h2>}
           {this.state.tests ?
             <div>
               <TestsSummary
