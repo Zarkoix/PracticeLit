@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 // library components
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 // higher order components
 import styled from 'styled-components'
@@ -45,9 +46,15 @@ class Workspace extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/r/' + this.state.qId).then(r => r.text()).then(r => this.setState({
-      problemPrompt: r
-    }))
+    fetch('/api/r/' + this.state.qId).then(r => {
+      if (r.status === 200) {
+        return r.text().then(r => this.setState({
+          problemPrompt: r
+        }))
+      } else {
+        this.props.history.push('/404')
+      }
+    })
 
     this.props.socket.registerType('TestInfo', this.receivedTestInfo)
     this.props.socket.registerType('CodeReceived', () => this.setState({
@@ -129,7 +136,13 @@ class Workspace extends Component {
   }
 }
 
-export default styled(socket(Workspace))`
+Workspace.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
+};
+
+export default styled(socket(withRouter(Workspace)))`
   background-color: ${backgroundColor};
   min-height: 100%;
   height: 100%;
