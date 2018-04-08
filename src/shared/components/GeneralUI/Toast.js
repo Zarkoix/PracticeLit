@@ -32,8 +32,14 @@ export default styled(Toast)`
   position: fixed;
   z-index: 5;
   height: 50px;
-  
+  padding: 0 5px;
   cursor: pointer;
+  left: 15px;
+  bottom: 45px;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 100;
+  line-height: 50px
   
   &.toast-enter {
     transform: translateY(500%);
@@ -52,10 +58,6 @@ export default styled(Toast)`
     transform: translateY(500%);
   }
   
-  left: 15px;
-  bottom: 45px;
-  border-radius: 15px;
-  
   .toast__icon {
     padding: 0 5px;
     font-size: x-large;
@@ -64,9 +66,4 @@ export default styled(Toast)`
   .toast__text {
     padding: 0 5px;
   }
-  
-  padding: 0px;
-  font-size: 16px;
-  font-weight: 100;
-  line-height: 50px
 `

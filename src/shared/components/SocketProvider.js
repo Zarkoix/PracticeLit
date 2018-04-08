@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import Toast from './GeneralUI/Toast'
+import { green, errorColor } from '../theme/theme'
 
 /**
  * this class is from Dashb0ard, could probably be abstracted and exposed as a library eventually
@@ -61,7 +62,8 @@ class SocketProvider extends Component {
           socketReady: true,
           showToast: true,
           toastMessage: 'Connection Established',
-          toastStatusIcon: '👍'
+          toastStatusIcon: '👍',
+          toastColor: green
         })
 
         setTimeout(() => {
@@ -84,7 +86,8 @@ class SocketProvider extends Component {
           preparingSocket: false,
           toastStatusIcon: '🛑',
           toastMessage: 'Connection Lost',
-          showToast: true
+          showToast: true,
+          toastColor: errorColor
         })
         this.pollForConnection()
       }
@@ -107,6 +110,7 @@ class SocketProvider extends Component {
           <Toast
             text={this.state.toastMessage}
             icon={this.state.toastStatusIcon}
+            color={this.state.toastColor}
             onClick={() => this.setState({ showToast: false })}
           />
         </CSSTransition>
