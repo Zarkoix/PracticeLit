@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const socket = (ComponentToWrap) => {
   return class SocketComponent extends Component {
     static contextTypes = {
-      socket: PropTypes.object,
+      socket: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
     }
 
     render() {

@@ -1,16 +1,23 @@
-import { Component, Children } from 'react'
+import { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import Toast from './GeneralUI/Toast'
 
 /**
  * this class is from Dashb0ard, could probably be abstracted and exposed as a library eventually
  */
 class SocketProvider extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
-      socket: false,
+      socket: {
+        registerType: this.registerType
+      },
       socketReady: false,
-      socketAuth: false
+      showToast: false,
+      preparingSocket: false
     }
   }
 
@@ -19,28 +26,51 @@ class SocketProvider extends Component {
   }
 
   static childContextTypes = {
-    socket: PropTypes.object.isRequired,
+    socket: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  }
+
+  getChildContext () {
+    return {
+      socket: this.state.socket
+    }
   }
 
   types = {}
 
-  componentWillMount() {
-    const canUseDOM = typeof window !== 'undefined'
-    if (canUseDOM) {
-      const socket = new WebSocket('ws://localhost:8080')
-      socket.ready = false
-      socket.registerType = this.registerType
+  canUseDOM = () => typeof window !== 'undefined'
+
+  componentDidMount () {
+    if (!this.state.socketReady && this.canUseDOM()) { // see if we can use the dom (if we're client side or now)
+      console.log('prepare socket from mount')
+      this.prepareSocket() //if we're client side we can fully prepare the socket
+    }
+  }
+
+  prepareSocket = () => {
+    if (!this.state.preparingSocket) {
       this.setState({
-        socket: socket,
+        preparingSocket: true
       })
+      const socket = new WebSocket('ws://localhost:8080')
+      socket.registerType = this.registerType
 
       socket.onopen = () => {
         socket.ready = true
         this.setState({
           socket: socket,
-          socketReady: true
+          socketReady: true,
+          showToast: true,
+          toastMessage: 'Connection Established',
+          toastStatusIcon: '👍'
         })
-        console.log('connection established')
+
+        setTimeout(() => {
+          if (this.state.toastMessage === 'Connection Established') { // ensure its not wiping a connection lost message
+            this.setState({
+              showToast: false,
+            })
+          }
+        }, 2000)
       }
 
       socket.onmessage = (event) => {
@@ -49,31 +79,48 @@ class SocketProvider extends Component {
       }
 
       socket.onclose = (err) => {
-        console.log(err)
-        console.log('connection lost')
+        this.setState({
+          socketReady: false,
+          preparingSocket: false,
+          toastStatusIcon: '🛑',
+          toastMessage: 'Connection Lost',
+          showToast: true
+        })
+        this.pollForConnection()
       }
-
-      this.setState({
-        socket: socket
-      })
+    } else {
+      console.log('[ERROR] socket already being prepared')
     }
+  }
+
+  pollForConnection() {
+    this.prepareSocket()
   }
 
   registerType = (type, f) => {
     this.types[type] = f
   }
 
-  getChildContext() {
-    return {
-      socket: this.state.socket
-    }
-  }
+  render () {
+    let toast = this.state.showToast
+      ? <CSSTransition classNames="toast" timeout={{enter: 400, exit: 300}}>
+          <Toast
+            text={this.state.toastMessage}
+            icon={this.state.toastStatusIcon}
+            onClick={() => this.setState({ showToast: false })}
+          />
+        </CSSTransition>
+      : null
 
-  render() {
     return (
-      Children.only(this.props.children)
+      <div>
+        {this.props.children}
+        <TransitionGroup>
+            {toast}
+        </TransitionGroup>
+      </div>
     )
   }
 }
 
-export default SocketProvider;
+export default SocketProvider

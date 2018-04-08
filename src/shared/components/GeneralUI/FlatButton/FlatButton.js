@@ -1,26 +1,28 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { backgroundColor } from '../../../theme/theme'
 
 const defaultOnClick = (e) => e.preventDefault()
 
-const FlatButton = ({className, text, type,
-                      onClick=defaultOnClick,
-                      color="white",
-                      backgroundColor="transparent",
-                      big=false,
-                      disabled=false,
-                      disabledColor='grey',
-                      style={}}) =>
-  (<button
+const FlatButton = ({ className, text, type,
+                      onClick = defaultOnClick,
+                      color = "white",
+                      backgroundColor = "transparent",
+                      big = false,
+                      disabled = false,
+                      disabledColor = "grey",
+                      style = {}
+}) =>
+  <button
     className={className}
     style={{ style }}
     onClick={() => {
       if (!disabled) onClick()
     }}
     type={type}
-  > {text} </button>)
+  >
+    {text}
+  </button>
 
 
 export default styled(FlatButton)`

@@ -18,6 +18,7 @@ import App from '../shared/App';
  * @param clientStats Parameter passed by hot server middleware
  */
 export default ({ clientStats }) => async (req, res) => {
+    console.log('running render')
     const ClientApp = () =>
       <StaticRouter context={{}} location={req.url}>
         <App/>
@@ -37,4 +38,5 @@ export default ({ clientStats }) => async (req, res) => {
         cssHash,
         styledComponents
     });
+    console.log('finished render')
 };
