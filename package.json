@@ -1,0 +1,28 @@
+{
+  "name": "practicelit",
+  "version": "0.8.0",
+  "description": "modern version of practice it, built to scale",
+  "main": "N/A",
+  "scripts": {
+    "run:web": "cd Web; npm run start",
+    "run:java": "cd JavaTestRunner; ./gradlew run",
+    "run:rmq": "rabbitmq-server",
+    "rmq-stop": "rabbitmqctl stop",
+    "setup": "cd Web; npm run setup; cd ../"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zarkoix/PracticeLit.git"
+  },
+  "keywords": [
+    "education",
+    "computer",
+    "science"
+  ],
+  "author": "Adam Towers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zarkoix/PracticeLit/issues"
+  },
+  "homepage": "https://github.com/Zarkoix/PracticeLit#readme"
+}
