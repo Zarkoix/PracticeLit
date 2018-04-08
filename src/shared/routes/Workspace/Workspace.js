@@ -89,7 +89,7 @@ class Workspace extends Component {
             })}/>}
           </div>
           <div style={{
-            margin: '5% 0',
+            margin: '2% 0',
             display: 'flex',
             justifyContent: 'center'
           }}>
