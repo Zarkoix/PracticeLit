@@ -8,14 +8,15 @@ class Directory extends Component {
   constructor() {
     super();
     this.state = {
-      directory: []
+      directory: {}
     }
   }
 
   componentDidMount() {
     fetch('/api/r/').then(res => res.json()).then(res => {
+      console.log(res)
       this.setState({
-        directory: res.directory
+        directory: res
       })
     })
   }

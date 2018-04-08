@@ -2,17 +2,35 @@
 
 This folder stores example questions and implementation details for a PracticeLit repository.
 
+# Repository Format
+**repository.json** contains the directory structure of the repository in the format:
+
+    {
+        "142": {
+            "Winter 2017": {
+                "Static Methods": {
+                     "add1": "Add 1"
+                }
+            }
+        }
+    }
+
+Keys with values of Strings are questions, the value is the id.
+Keys with values of objects are directories, the value is the children.
+
+The repository contains folders with the name of the ID of the contained question, the question format present in these folders is defined below.
+
 # Question Format
 Location and meta-data: **manifest.json**
 
     {
-        "name": "Problem 5",
-        "id": "win2017AM5",
+        "name": "Add 1",
+        "id": "win2017add1",
         "language": "java"
-        "location": "Winter2017/ArrayMystery",
+        "location": "142/Winter 2017/Static Methods",
         "author": "Adam Towers",
         "dateCreated": "1356739200",
-        "tags": ["Array Mystery"]
+        "tags": ["Static Methods"]
     }
 
 

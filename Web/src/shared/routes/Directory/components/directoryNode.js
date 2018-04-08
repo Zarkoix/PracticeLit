@@ -4,19 +4,6 @@ import { primaryColor, textColor, green } from "../../../theme/theme";
 
 import { Link } from "react-router-dom";
 
-/*
-      directory: [{
-          isQuestion: false,
-          id: '12345',
-          children: {}
-        }, {
-          isQuestion: true,
-          completed: false,
-          id: '23456'
-        }
-      ]
- */
-
 class DirectoryNode extends Component {
   constructor() {
     super();
@@ -25,23 +12,27 @@ class DirectoryNode extends Component {
     };
   }
 
-  static displayName(name, isQuestion = true, completed = false) {
+  static displayName(name, isQuestion = true) {
     if (!isQuestion) return "📦 " + name;
-    if (completed) return "✅ " + name;
+    // if (completed) return "✅ " + name; // only uncomment this if completed support is eventually added
     return "  " + name;
+  }
+
+  static isNodeQuestion(node) {
+    return typeof node[1] !== 'object'
   }
 
   render() {
     return (
       <div className={this.props.className}>
-        {this.props.node.map(
+        {Object.entries(this.props.node).map(
           e =>
-            e.isQuestion ? (
-              <Link key={e.id} className="linkQuestion" to={"/a/" + e.id}>
-                {DirectoryNode.displayName(e.name, e.isQuestion, e.completed)}
+            DirectoryNode.isNodeQuestion(e) ? (
+              <Link key={e[0]} className="linkQuestion" to={"/a/" + e[0]}>
+                {DirectoryNode.displayName(e[1], true)}
               </Link>
             ) : (
-              <div key={e.id}>
+              <div key={e[0]}>
                 <div
                   onClick={() => this.setState({ open: !this.state.open })}
                   className="linkDirectory"
@@ -49,11 +40,11 @@ class DirectoryNode extends Component {
                     color: this.state.open ? primaryColor : textColor
                   }}
                 >
-                  {DirectoryNode.displayName(e.name, e.isQuestion, e.completed)}
+                  {DirectoryNode.displayName(e[0], false)}
                 </div>
                 {this.state.open && (
                   <div className="directory">
-                    <DirectoryNode node={e.children} />
+                    <DirectoryNode node={e[1]} />
                   </div>
                 )}
               </div>
