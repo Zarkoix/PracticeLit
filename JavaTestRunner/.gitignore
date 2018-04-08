@@ -1,0 +1,14 @@
+
+# bytecode
+/out/
+
+# idea files
+*.iml
+*.ipr
+*.iws
+.idea
+
+# gradle
+.gradle
+/build/
+

@@ -1,7 +1,3 @@
-# js dependencies
-node_modules
-node_modules/*
-
 # Misc.
 .DS_STORE
-.Idea
+.idea
