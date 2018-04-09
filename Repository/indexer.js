@@ -1,7 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-let repositoryPath = path.join(__dirname, 'ExampleRepository')
-let testsuitesPath = path.join(__dirname, '../JavaTestRunner/src/info/atowers/practicelit/java/testsuites')
+const repositoryPath = path.join(__dirname, 'ExampleRepository')
+const testsuitesPath = path.join(__dirname, '../JavaTestRunner/src/info/atowers/practicelit/java/testsuites')
+const projectRootPath = path.join(__dirname, '../')
+console.log(projectRootPath)
 
 let repository = {}
 let ids = [] // TODO either save this to file, or don't compute it
@@ -44,11 +46,12 @@ fs.readdir(repositoryPath, (err, files) => {
         repository[manifest.id] = manifest.name
       }
 
-      /* symlink the java coe to JavaTestRunner/..../testsuites */
+      /* symlink the java code to JavaTestRunner/..../testsuites */
       const javaFileName = f + '.java'
       const javaPath = path.join(repositoryPath, f, javaFileName)
+      const relativeJavaPath = path.relative(projectRootPath, javaPath)
       try {
-        fs.symlinkSync(javaPath, path.join(testsuitesPath, javaFileName))
+        fs.symlinkSync(relativeJavaPath, path.join(testsuitesPath, javaFileName))
       } catch(err) {
         if (err.code !== 'EEXIST') { // if the error is not the symlink already existing, throw it and crash
           throw err
