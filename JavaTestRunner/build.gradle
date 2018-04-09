@@ -11,6 +11,7 @@ apply plugin: 'application'
 mainClassName = 'info.atowers.practicelit.java.Main'
 sourceSets.main.java.srcDirs = ['src']
 
+
 repositories {
     mavenCentral()
 }

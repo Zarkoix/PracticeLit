@@ -35,7 +35,7 @@ class Workspace extends Component {
   }
 
   receivedTestInfo = ({ questionID, testInfo }) => {
-    if (Number(questionID) === Number(this.state.qId)) {
+    if (questionID === this.state.qId) {
       this.setState({
         tests: testInfo,
         solutionProcessing: false

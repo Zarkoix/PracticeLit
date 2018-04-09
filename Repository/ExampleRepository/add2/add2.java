@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class add1 implements ITestSuite {
+public class add2 implements ITestSuite {
 
     @Override
     public Optional<String> isFullClass() {
@@ -20,11 +20,11 @@ public class add1 implements ITestSuite {
     public List<TestCase> runTests(Class testCode)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
     {
-        Method add1 = testCode.getMethod("add1", int.class);
+        Method add1 = testCode.getMethod("add2", int.class);
 
         System.out.println("TestCase suite 1 executing");
         List<TestCase> tests = new LinkedList<>();
-        TestCase tc1 = new TestCase("Test Case 1", "2", "3");
+        TestCase tc1 = new TestCase("Test Case 1", "2", "4");
         tc1.answer("" + add1.invoke(null, 2));
 
         tests.add(tc1);
@@ -34,11 +34,11 @@ public class add1 implements ITestSuite {
     @Override
     public MethodSignature[] requiredMethods() {
         return new MethodSignature[]{
-                new MethodSignature("add1", new Type[]{Integer.TYPE}, Integer.TYPE)};
+                new MethodSignature("add2", new Type[]{Integer.TYPE}, Integer.TYPE)};
     }
 
     @Override
     public String getName () {
-        return "add1";
+        return "add2";
     }
 }

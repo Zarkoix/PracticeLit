@@ -123,7 +123,7 @@ public class TestRunner {
     public static ITestSuite fetchTestSuite(TestInfo testInfo, String questionID) {
         ITestSuite suite = null;
         try {
-            suite = Class.forName("info.atowers.practicelit.java.testsuites.TestSuite" + questionID)
+            suite = Class.forName("info.atowers.practicelit.java.testsuites." + questionID)
                     .asSubclass(ITestSuite.class).newInstance();
         } catch (InstantiationException e) {
             testInfo.addError(new TestError("Server Error 001: An error occurred while preparing the test suite."));
