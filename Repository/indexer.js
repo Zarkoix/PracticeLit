@@ -49,7 +49,8 @@ fs.readdir(repositoryPath, (err, files) => {
       /* symlink the java code to JavaTestRunner/..../testsuites */
       const javaFileName = f + '.java'
       const javaPath = path.join(repositoryPath, f, javaFileName)
-      const relativeJavaPath = path.relative(projectRootPath, javaPath)
+      const relativeJavaPath = path.relative(testsuitesPath, javaPath)
+      console.log(relativeJavaPath)
       try {
         fs.symlinkSync(relativeJavaPath, path.join(testsuitesPath, javaFileName))
       } catch(err) {
