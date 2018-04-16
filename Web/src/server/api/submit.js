@@ -7,7 +7,9 @@ const router = express.Router()
 let sendToQueue
 // this is async so their is a time when sendToQueue is undefined,
 // but it theoretically should never be called because server is still booting up
-rmq.initialize('q_submit', (s2q) => sendToQueue = s2q)
+rmq.initializeConnection()
+  .then((connection) => rmq.initializeChannel(connection, 'q_submit', (s2q) => sendToQueue = s2q))
+  .catch((err) => console.log(err))
 rmq.registerNewTestQueueConsumer(function (msg) {
   const parts = msg.split(' ')
   const id = parts.shift()

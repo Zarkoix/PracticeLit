@@ -19,10 +19,16 @@ public class TestRunner {
     private final static String SUBMIT_QUEUE_NAME = "q_submit";
     private final static String TESTS_QUEUE_NAME = "q_tests";
 
-    public static void startTestRunner()  throws java.io.IOException, java.util.concurrent.TimeoutException,
+    public static void startTestRunner(boolean isProduction)  throws java.io.IOException, java.util.concurrent
+            .TimeoutException,
             java.lang.InterruptedException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        System.out.println("starting test runner in " + (isProduction ? "production" : "development"));
+        if (isProduction) {
+            factory.setHost("rabbitmq");
+        } else {
+            factory.setHost("localhost");
+        }
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
         channel.queueDeclare(SUBMIT_QUEUE_NAME, false, false, false, null);

@@ -16,7 +16,7 @@ export default {
    * @param server the express server
    * @param port the port to run it on
    */
-  start: function (server, port) {
+  start: function (server) {
     log('info', '[WSS] WSS initializing')
     /* a structure mapping sessionIDs to their web socket connection
        {
@@ -24,8 +24,8 @@ export default {
        }
      */
 
-    const wss = new WebSocket.Server({server, port})
-    log('info', '[WSS] WSS ready on ' + port)
+    const wss = new WebSocket.Server({ server: server })
+    log('info', '[WSS] WSS ready')
 
     let nextID = 0
 

@@ -1,0 +1,7 @@
+src
+gradle
+out
+.gradle
+.idea
+build.gradle
+gradlew

@@ -1,0 +1,17 @@
+version: '3'
+services:
+  rabbitmq:
+    image: "rabbitmq:3"
+    ports:
+     - "3001:5672"
+    hostname: "rmq"
+  web:
+    build: Web/.
+    depends_on:
+      - rabbitmq
+    ports:
+     - "3000:80"
+  jtr:
+    build: JavaTestRunner/.
+    depends_on:
+      - rabbitmq

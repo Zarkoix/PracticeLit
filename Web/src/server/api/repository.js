@@ -1,25 +1,28 @@
-import express from 'express';
+import express from 'express'
 import { log } from 'winston'
-import path from 'path'
 import fs from 'fs'
+import path from 'path'
 
-const router = express.Router();
+const router = express.Router()
 
-const repositoryPath = path.normalize(path.join(__dirname, '../../../../Repository/ExampleRepository'))
-const repositoryManifest = JSON.parse(fs.readFileSync(repositoryPath + '/repository.json'))
+const repositoryPath = process.env.NODE_ENV === 'development' ? 'public/repository' : 'repository'
+const manifestPath = path.resolve(path.join(repositoryPath, 'repository.json'))
+console.log(path.resolve(''))
+const repositoryManifest = JSON.parse(fs.readFileSync(manifestPath))
 log('info', 'Repository initialized at ' + repositoryPath)
 
 router.get('/', async (req, res) => {
-    return res.status(200).json(repositoryManifest)
+  return res.status(200).json(repositoryManifest)
 })
 
 router.get('/:id', (req, res) => {
-  const promptPath = repositoryPath + '/' + req.params.id + '/' + req.params.id + '.html'
+  const promptPath = path.join(repositoryPath, 'problemPrompts', req.params.id + '.html')
   if (fs.existsSync(promptPath)) {
-    res.status(200).sendFile(promptPath )
+    res.status(200).sendFile(promptPath)
   } else {
     res.status(204).end()
   }
 })
 
-export default router;
+export default router
+

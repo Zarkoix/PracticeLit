@@ -1,14 +1,16 @@
 import express from 'express'
-import http from 'http'
 import { join } from 'path'
 import { log } from 'winston'
 
+import ws from './server/ws'
 import api from './server/api'
 
 /**
  * Default port
  */
-const defaultPort = 3002
+const defaultPort = 80
+const port = process.env.PORT || defaultPort
+log('info', 'starting server on port ' + port)
 
 /**
  * Configures hot reloading and assets paths for local development environment.
@@ -21,7 +23,7 @@ const configureDevelopment = app => {
   const serverConfig = require('../webpack/server')
   const publicPath = clientConfig.output.publicPath
   const outputPath = clientConfig.output.path
-
+ 
   const multiCompiler = require('webpack')([clientConfig, serverConfig])
   const clientCompiler = multiCompiler.compilers[0]
 
@@ -79,9 +81,11 @@ if (process.env.NODE_ENV === 'development') {
 
 log('info', 'Configuring server engine...')
 app.set('view engine', 'ejs')
-app.set('port', process.env.PORT || defaultPort)
+app.set('port', port)
 
-import ws from './server/ws'
-ws.start(http.createServer(app), 8080)
+let server = app.listen(app.get('port'), () => {
+  log('info', `Server listening on port ${app.get('port')}...`)
+  ws.start(server)
+})
 
-app.listen(app.get('port'), () => log('info', `Server listening on port ${app.get('port')}...`))
+

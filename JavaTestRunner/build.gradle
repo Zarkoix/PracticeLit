@@ -8,9 +8,19 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'application'
 
-mainClassName = 'info.atowers.practicelit.java.Main'
 sourceSets.main.java.srcDirs = ['src']
+mainClassName = 'info.atowers.practicelit.java.Main'
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'info.atowers.practicelit.java.Main'
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
 
 repositories {
     mavenCentral()
