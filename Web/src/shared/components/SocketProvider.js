@@ -52,7 +52,11 @@ class SocketProvider extends Component {
       this.setState({
         preparingSocket: true
       })
-      const socket = new WebSocket('ws://localhost:8080')
+
+      let s = 'ws://' + location.hostname + (location.port ? ':' + location.port : '');
+
+      console.log(s)
+      const socket = new WebSocket(s)
       socket.registerType = this.registerType
 
       socket.onopen = () => {

@@ -6,11 +6,29 @@ import ws from './server/ws'
 import api from './server/api'
 
 /**
- * Default port
+ * configure server port, attempt to use PORT environment variable, otherwise default to 80
  */
 const defaultPort = 80
-const port = process.env.PORT || defaultPort
-log('info', 'starting server on port ' + port)
+let port
+if (!process.env.PORT) {
+  log('info', 'no port provided, starting server on ' + defaultPort)
+  port = defaultPort
+} else {
+  port = process.env.PORT
+  log('info', 'starting server on port ' + port)
+}
+
+/**
+ * configure node env, attempt to use NODE_ENV environment variable, otherwise default to 'production'
+ */
+let isProduction
+if (process.env.NODE_ENV) {
+  isProduction = process.env.NODE_ENV.toUpperCase().includes('PROD')
+  log('info', 'NODE_ENV is ' + process.env.NODE_ENV + ' which evaluates isProduction to ' + isProduction)
+} else {
+  log('info', 'No NODE_ENV found, defaulting to production')
+  isProduction = true
+}
 
 /**
  * Configures hot reloading and assets paths for local development environment.
@@ -72,11 +90,11 @@ const app = express()
 log('info', 'Configuring express routes...')
 app.use('/api', api)
 
-log('info', `Configuring server for environment: ${process.env.NODE_ENV}...`)
-if (process.env.NODE_ENV === 'development') {
-  configureDevelopment(app)
-} else {
+log('info', `Configuring server for environment: ${isProduction ? 'production' : 'development'}...`)
+if (isProduction) {
   configureProduction(app)
+} else {
+  configureDevelopment(app)
 }
 
 log('info', 'Configuring server engine...')

@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', (req, res) => {
   const promptPath = path.join(repositoryPath, 'problemPrompts', req.params.id + '.html')
   if (fs.existsSync(promptPath)) {
-    res.status(200).sendFile(promptPath)
+    res.status(200).sendFile(path.resolve(promptPath))
   } else {
     res.status(204).end()
   }

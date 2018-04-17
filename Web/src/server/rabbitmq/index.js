@@ -3,17 +3,21 @@ import { log } from 'winston'
 
 let testQueueConsumers = []
 
-const host = process.env.NODE_ENV === 'production' ? 'rabbitmq' : 'localhost'
+// use the RMQ environment variable if possible, otherwise default to basing host on NODE_ENV
+const host = process.env.RMQ
+  ? process.env.RMQ
+  : process.env.NODE_ENV === 'production' ? 'rabbitmq' : 'localhost'
 
 let initializeConnection = () => {
+  log('info', '[RMQ] initializing on host ' + host)
   return new Promise((resolve, reject) => {
     amqp.connect('amqp://' + host, function (err, conn) {
       if (err) {
         if (err.code === 'ECONNREFUSED') {
-          console.log('rabbitmq server cannot be reached @ ' + host + ', trying again in 1s')
+          log('warn', 'rabbitmq server cannot be reached @ ' + host + ', trying again in 1s')
           setTimeout(initializeConnection, 1000)
         } else {
-          console.log('rabbitmq connection error: ' + error.code)
+          log('error', 'rabbitmq connection error: ' + err.code)
           reject(err)
         }
       } else {
@@ -28,7 +32,7 @@ let initializeTestQueue = (conn) => {
   conn.createChannel(function (err, ch) {
     let testQueue = 'q_tests'
     ch.assertQueue(testQueue, {durable: false})
-    log('info', '[rabbit] Waiting for messages in ' + testQueue)
+    log('info', '[RMQ] Waiting for messages in ' + testQueue)
     ch.consume(testQueue, function (msg) {
       for (let i = 0; i < testQueueConsumers.length; i++) {
         testQueueConsumers[i](msg.content.toString())

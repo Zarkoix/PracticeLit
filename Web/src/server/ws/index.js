@@ -14,7 +14,6 @@ export default {
   /**
    * starts the WebSocket server on the specified port
    * @param server the express server
-   * @param port the port to run it on
    */
   start: function (server) {
     log('info', '[WSS] WSS initializing')
