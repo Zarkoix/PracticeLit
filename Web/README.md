@@ -1,14 +1,8 @@
 # PraticeLit
 A modern version of PracticeIt designed to operate smoother and scale better
 
-# Related Repos
-
-The Java test runner (shown in the above diagram) can be found [here](https://github.com/Zarkoix/PracticeLitJavaTestRunner/tree/master).
-
 # Architecture
 This repo contains the Client and NodeJS code.
-
-![project diagram](Design/arch.png)
 
 # Installation and Usage
 
@@ -20,7 +14,7 @@ Then `npm start` to start the dev server
 
 `npm build` builds all, `npm build:(client/server/node)` for individual pieces
 
-# Dependency Licenses not present in node_modules/
+# Code is built on rherwig/template-react-16-ssr skeleton
 [rherwig/template-react-16-ssr](https://github.com/rherwig/template-react-16-ssr/blob/feature/express-routing/LICENSE)
 
 > Copyright 2017 SHOPMACHER eCommerce GmbH & Co. KG
