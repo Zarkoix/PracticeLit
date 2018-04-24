@@ -24,7 +24,7 @@ class Directory extends Component {
   render() {
     return (
       <div className={this.props.className}>
-        <h1>PraticeLit 🔥</h1>
+        <h1>PracticeLit 🔥</h1>
         <div style={{
           padding: '0 7%'
         }}>
