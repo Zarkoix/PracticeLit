@@ -19,7 +19,6 @@ module.exports = merge(common, {
         chunkFilename: '[name].js'
     },
     optimization: {
-
     },
     plugins: [
         new webpack.HashedModuleIdsPlugin(),

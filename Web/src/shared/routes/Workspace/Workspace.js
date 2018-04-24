@@ -21,14 +21,13 @@ import Footer from "../../components/Footer.js";
 import universal from "react-universal-component";
 
 let UniversalEditor = universal(import("./components/Editor"));
-/*
-*/
 
 class Workspace extends Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
-      qId: props.match.params.id,
+      qId: props.location.pathname.split('/')[2], // get the question id from the pathname
       done: true,
       loaded: false,
       problemPrompt: "",
@@ -61,6 +60,7 @@ class Workspace extends Component {
           })
         );
       } else {
+        console.log("No data found for that problem, rerouting...");
         this.props.history.push("/404");
       }
     });

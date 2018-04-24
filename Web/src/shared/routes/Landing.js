@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from 'prop-types'
 import { withRouter } from "react-router-dom";
-import FlatButton from '../../components/GeneralUI/FlatButton'
-import { backgroundColor, primaryColor, textColor } from '../../theme/theme'
+import FlatButton from '../components/GeneralUI/FlatButton'
+import { backgroundColor, primaryColor, textColor } from '../theme/theme'
 
 const Landing = ({history}) =>
   <div

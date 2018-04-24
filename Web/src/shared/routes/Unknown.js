@@ -1,8 +1,8 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
-import FlatButton from '../../components/GeneralUI/FlatButton'
+import FlatButton from '../components/GeneralUI/FlatButton'
 import { withRouter } from 'react-router-dom'
-import { backgroundColor, primaryColor, textColor } from '../../theme/theme'
+import { backgroundColor, primaryColor, textColor } from '../theme/theme'
 
 const Unknown = ({history}) => (
   <div style={{
