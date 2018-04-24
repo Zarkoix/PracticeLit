@@ -1,14 +1,14 @@
-import express from 'express'
+import * as express from 'express'
 import { log } from 'winston'
-import fs from 'fs'
-import path from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
 
 const router = express.Router()
 
 const repositoryPath = process.env.NODE_ENV === 'development' ? 'public/repository' : 'repository'
 const manifestPath = path.resolve(path.join(repositoryPath, 'repository.json'))
 console.log(path.resolve(''))
-const repositoryManifest = JSON.parse(fs.readFileSync(manifestPath))
+const repositoryManifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"))
 log('info', 'Repository initialized at ' + repositoryPath)
 
 router.get('/', async (req, res) => {

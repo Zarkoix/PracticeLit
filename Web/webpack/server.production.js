@@ -5,6 +5,7 @@ const join = require('path').join;
 const nodeExternals = require('../scripts/node-externals');
 
 module.exports = merge(common, {
+    mode: 'production',
     name: 'server',
     target: 'node',
     externals: nodeExternals,
@@ -17,21 +18,6 @@ module.exports = merge(common, {
         filename: 'app.server.js',
         chunkFilename: '[name].js',
         libraryTarget: 'commonjs2'
-    },
-    module: {
-        rules: [{
-            test: /\.styl/,
-            exclude: /node_modules/,
-            use: [{
-                loader: 'css-loader/locals',
-                options: {
-                    modules: true,
-                    localIdentName: '[name]__[local]--[hash:base64:5]'
-                }
-            }, {
-                loader: 'stylus-loader'
-            }]
-        }]
     },
     plugins: [
         new webpack.optimize.LimitChunkCountPlugin({

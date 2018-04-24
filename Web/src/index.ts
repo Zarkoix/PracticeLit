@@ -2,19 +2,19 @@ import express from 'express'
 import { join } from 'path'
 import { log } from 'winston'
 
-import ws from './server/ws'
-import api from './server/api'
+import ws from './server/ws/index'
+import api from './server/api/index'
 
 /**
  * configure server port, attempt to use PORT environment variable, otherwise default to 80
  */
-const defaultPort = 80
-let port
+const defaultPort: number = 80
+let port: number
 if (!process.env.PORT) {
   log('info', 'no port provided, starting server on ' + defaultPort)
   port = defaultPort
 } else {
-  port = process.env.PORT
+  port = Number.parseInt(process.env.PORT)
   log('info', 'starting server on port ' + port)
 }
 
@@ -36,7 +36,7 @@ if (process.env.NODE_ENV) {
  *
  * @param app Express app
  */
-const configureDevelopment = app => {
+const configureDevelopment = (app: express.Application) => {
   const clientConfig = require('../webpack/client')
   const serverConfig = require('../webpack/server')
   const publicPath = clientConfig.output.publicPath
@@ -64,7 +64,7 @@ const configureDevelopment = app => {
  *
  * @param app Express app
  */
-const configureProduction = app => {
+const configureProduction = (app: express.Application) => {
   const clientStats = require('./assets/stats.json')
   const serverRender = require('./assets/app.server.js').default
   const publicPath = '/'

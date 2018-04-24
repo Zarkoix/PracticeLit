@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Landing from './routes/Landing'
-import Directory from './routes/Directory'
-import Workspace from './routes/Workspace'
-import Unknown from './routes/Unknown'
-
-import './App.styl'
 import SocketProvider from './components/SocketProvider'
+import universal from 'react-universal-component';
+
+const UniversalComponent = universal(props => import(`./${props.page}`))
 
 /**
  * The `App` component is the entry point for the react app.
@@ -16,18 +13,15 @@ import SocketProvider from './components/SocketProvider'
  * You can start developing your react app here.
  */
 class App extends Component {
-    render() {
-        return (
-          <SocketProvider>
-            <Switch>
-              <Route exact path='/' component={Landing}/>
-              <Route path='/q' component={Directory}/>
-              <Route path='/a/:id' component={Workspace}/>
-              <Route otherwise component={Unknown}/>
-            </Switch>
-          </SocketProvider>
-        );
-    }
+  render = () =>
+    <SocketProvider>
+      <Switch>
+        <Route exact path='/' component={() => <UniversalComponent page="routes/Landing/Landing.js" />}/>
+        <Route path='/q' component={() => <UniversalComponent page="routes/Directory/Directory.js" />}/>
+        <Route path='/a/:id' component={() => <UniversalComponent page="routes/Workspace/Workspace.js" />}/>
+        <Route otherwise component={() => <UniversalComponent page="routes/Unknown/Unknown.js" />}/>
+      </Switch>
+    </SocketProvider>
 }
 
 export default App

@@ -11,11 +11,14 @@ import App from '../shared/App';
  *
  * @param Component React component that should be rendered
  */
-const render = Component => hydrate(
+const render = Component => {
+    console.log('running client index render')
+    return hydrate(
     <BrowserRouter>
       <Component/>
     </BrowserRouter>
   , document.getElementById('react-root'))
+}
 
 render(App);
 
