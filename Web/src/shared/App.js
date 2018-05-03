@@ -34,11 +34,4 @@ function router (route) {
   return 'Unknown'
 }
 
-/*
-        <Route exact path='/' component={() => <UniversalComponent page="routes/Landing/Landing.js" />}/>
-        <Route path='/q' component={() => <UniversalComponent page="routes/Directory/Directory.js" />}/>
-        <Route path='/a/:id' component={() => <UniversalComponent page="routes/Workspace/Workspace.js" />}/>
-        <Route otherwise component={() => <UniversalComponent page="routes/Unknown/Unknown.js" />}/>
-*/
-
 export default App

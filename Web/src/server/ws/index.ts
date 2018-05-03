@@ -55,14 +55,15 @@ export default {
           /**
            * no server level type on the packet, so let's see if it's addressed to a module
            */
-          default:
+          default: {
             if (consumers.has(message.type)) {
               // is there a type?
               // if so call the wsManager for that module with the packet
               consumers.get(message.type)(message, ws)
             } else {
-              log('info', '[WSS] no route for ' + message.type + ' exists')
+              log('warn', '[WSS] no route for ' + message.type + ' exists')
             }
+          }
         }
       })
 
@@ -70,7 +71,7 @@ export default {
        * a WS lost a connection, so lets remove it from the session map
        */
       ws.on('close', () => {
-        console.log('closed ws')
+        log('info', 'closed ws')
       })
     })
 
@@ -91,7 +92,7 @@ export default {
       log('info', '[WSS] registering route WS route: ' + route)
       consumers.set(route, f)
     } else {
-      log('warn', '[WSS] cannot register another route: ' + route)
+      log('warn', '[WSS] cannot register because another route already exists: ' + route)
     }
   }
 }

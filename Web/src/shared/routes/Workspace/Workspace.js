@@ -20,11 +20,10 @@ import FlatButton from "../../components/GeneralUI/FlatButton/FlatButton";
 import Footer from "../../components/Footer.js";
 import universal from "react-universal-component";
 
-let UniversalEditor = universal(import("./components/Editor"));
+let Editor = universal(import("../async/Editor"))
 
 class Workspace extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       qId: props.location.pathname.split('/')[2], // get the question id from the pathname
@@ -65,7 +64,7 @@ class Workspace extends Component {
       }
     });
 
-    this.props.socket.registerType("TestInfo", this.receivedTestInfo);
+    this.props.socket.registerType("TestInfo", ({ payload }) => this.receivedTestInfo(payload));
     this.props.socket.registerType("CodeReceived", () =>
       this.setState({
         solutionProcessing: true
@@ -81,14 +80,17 @@ class Workspace extends Component {
     this.props.socket.send(
       JSON.stringify({
         type: "TestCode",
-        questionID: this.state.qId,
-        code: this.state.solutionText
+        payload: {
+          questionID: this.state.qId,
+          code: this.state.solutionText
+        }
       })
     );
   };
 
   render() {
     const canUseDOM = typeof window !== "undefined";
+    console.log(canUseDOM + ': cud')
     return (
       <div className={this.props.className}>
         <TitleBar
@@ -103,16 +105,14 @@ class Workspace extends Component {
           }}
         >
           <ProblemPrompt promptText={this.state.problemPrompt} />
-          {canUseDOM && (
-            <UniversalEditor
-              editorContents={this.state.solutionText}
-              onChange={e =>
-                this.setState({
-                  solutionText: e // if there's performance issues, turn re-render on solutionText change off
-                })
-              }
-            />
-          )}
+          <Editor
+            editorContents={this.state.solutionText}
+            onChange={e =>
+              this.setState({
+                solutionText: e // if there's performance issues, turn re-render on solutionText change off
+              })
+            }
+          />
           <div
             style={{
               margin: "2% 0",

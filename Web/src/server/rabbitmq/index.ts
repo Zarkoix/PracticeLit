@@ -22,9 +22,7 @@ export let initializeConnection = (): Promise<Connection> =>
         reject(err)
       }
     })
-
   })
-
 
   /**
    * Registers a consumer to queue
@@ -45,5 +43,7 @@ export let initializeConnection = (): Promise<Connection> =>
    */
   export let sendToQueue = (channel: Channel, outbound: string): ((msg: string) => void) => {
     channel.assertQueue(outbound, { durable: false })
-    return (msg: string) => channel.sendToQueue(outbound, Buffer.from(msg))
+    return (msg: string) => {
+      channel.sendToQueue(outbound, Buffer.from(msg))
+    }
   }

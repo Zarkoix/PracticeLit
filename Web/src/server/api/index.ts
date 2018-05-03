@@ -9,7 +9,8 @@ const router = express.Router()
  * The api routes will be accessible from /api/ inside the browser.
  */
 router.use('/r', repository)
-router.use('/submit', submit)
+
+submit() // to set up the websocket submit system
 
 export default router
 
