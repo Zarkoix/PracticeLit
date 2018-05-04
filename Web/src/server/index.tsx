@@ -29,6 +29,7 @@ export default ({ clientStats }) => async (req: Request, res: Response) => {
     const appString = ReactDOM.renderToString(sheet.collectStyles(<ClientApp />))
     const styledComponents = sheet.getStyleTags() // <-- getting all the tags from the sheet
     const chunkNames = flushChunkNames()
+    console.log(chunkNames)
     const { js, styles, cssHash } = flushChunks(clientStats, { chunkNames })
 
     res.render('index', {
