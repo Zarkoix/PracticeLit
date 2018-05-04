@@ -7,6 +7,9 @@ const host = process.env.RMQ
   : process.env.NODE_ENV === 'production' ? 'rabbitmq' : 'localhost'
 
 export let initializeConnection = (): Promise<Connection> =>
+// TODO: test this code for scenarios when rabbitmq is not immediately available
+// sometimes TestCode WSS route will not be registered because the returned promise
+// does not resolve properly when rabbitmq is not available first try
   new Promise<Connection>((resolve, reject) => {
     log('info', '[RMQ] initializing on host ' + host)
     connect('amqp://' + host)
@@ -16,7 +19,7 @@ export let initializeConnection = (): Promise<Connection> =>
     .catch(err => {
       if (err.code === 'ECONNREFUSED') {
         log('warn', 'rabbitmq server cannot be reached @ ' + host + ', trying again in 1s')
-        setTimeout(initializeConnection, 1000)
+        setTimeout(() => resolve(initializeConnection()), 1000)
       } else {
         log('error', 'rabbitmq connection error: ' + err.code)
         reject(err)
