@@ -6,6 +6,7 @@ const nodeExternals = require('../scripts/node-externals')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = merge(common, {
+  mode: 'development',
   name: 'server',
   target: 'node',
   externals: nodeExternals,
@@ -17,25 +18,10 @@ module.exports = merge(common, {
     filename: 'app.server.js',
     libraryTarget: 'commonjs2'
   },
-  module: {
-    rules: [{
-      test: /\.styl/,
-      exclude: /node_modules/,
-      use: [{
-        loader: 'css-loader/locals',
-        options: {
-          modules: true,
-          localIdentName: '[name]__[local]--[hash:base64:5]'
-        }
-      }, {
-        loader: 'stylus-loader'
-      }]
-    }]
-  },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
     }),
-    //  new BundleAnalyzerPlugin({ analyzerPort: 8889 })
+    // ew BundleAnalyzerPlugin({ analyzerPort: 8889 })
   ]
 })

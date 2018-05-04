@@ -1,9 +1,13 @@
 package info.atowers.practicelit.java;
+
 import com.rabbitmq.client.*;
 import info.atowers.practicelit.java.compiler.JavaSourceCompiler;
 import info.atowers.practicelit.java.compiler.MethodSignature;
+import info.atowers.practicelit.java.structs.ResultsData;
 import info.atowers.practicelit.java.testinfo.TestError;
 import info.atowers.practicelit.java.testinfo.TestInfo;
+import info.atowers.practicelit.java.structs.CodeSubmission;
+import org.json.simple.JSONObject;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -16,8 +20,8 @@ import java.lang.reflect.Method;
 
 public class TestRunner {
 
-    private final static String SUBMIT_QUEUE_NAME = "q_submit";
-    private final static String TESTS_QUEUE_NAME = "q_tests";
+    private final static String SUBMIT_QUEUE_NAME = "q_java";
+    private final static String TESTS_QUEUE_NAME = "q_results";
 
     public static void startTestRunner(boolean isProduction)  throws java.io.IOException, java.util.concurrent
             .TimeoutException,
@@ -43,26 +47,20 @@ public class TestRunner {
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
                                        byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
-                int delimiterIndex = message.indexOf(" ");
-                int delimiter2Index = message.indexOf(" ", delimiterIndex + 1);
-
-                String sessionID = message.substring(0, delimiterIndex);
-                String questionID = message.substring(delimiterIndex + 1, delimiter2Index);
-                String code = message.substring(delimiter2Index);
-
+                CodeSubmission codeData = new CodeSubmission(message);
+                System.out.println("received data for question " + codeData.questionID);
                 TestInfo testInfo = new TestInfo();
-                ITestSuite testSuite = fetchTestSuite(testInfo, questionID);
-                testCode(testInfo, testSuite, code);
+                ITestSuite testSuite = fetchTestSuite(testInfo, codeData.questionID);
+                testCode(testInfo, testSuite, codeData.code);
 
-
-                String response = sessionID + " " + questionID + " " + testInfo.toJSON();
-                System.out.println(response);
-                channel.basicPublish("", TESTS_QUEUE_NAME, null, response.getBytes());
+                System.out.println(testInfo.toJSON());
+                JSONObject results = ResultsData.toJSON(codeData.submissionID, codeData.questionID, testInfo);
+                channel.basicPublish("", TESTS_QUEUE_NAME, null, results.toString().getBytes());
                 taskNumber++;
             }
         };
 
-        boolean autoAck = true; // automatically acknowledge work completion
+        final boolean autoAck = true; // automatically acknowledge work completion
         channel.basicConsume(SUBMIT_QUEUE_NAME, autoAck, consumer);
     }
 

@@ -89,4 +89,8 @@ public class TestInfo {
         }
         return obj;
     }
+
+    public String toString() {
+        return toJSON().toString();
+    }
 }

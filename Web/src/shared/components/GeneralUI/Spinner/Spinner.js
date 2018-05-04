@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './Spinner.css'
+// import './Spinner.css' TODO fix the spinner CSS
 
 class Spinner extends Component {
 

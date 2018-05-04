@@ -1,0 +1,13 @@
+{
+    "presets": [
+        ["@babel/env", {
+            "targets": {
+                "browsers": ["last 2 versions"]
+            }
+        }],
+        "@babel/preset-stage-0",
+        "@babel/preset-typescript",
+        "@babel/preset-react"
+    ],
+    "plugins": ["babel-plugin-universal-import"]
+}

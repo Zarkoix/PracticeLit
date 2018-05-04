@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { errorColor } from '../../../theme/theme'
 
-import './TextField.css'
+import styled from 'styled-components'
 
 const TextField = ({onChange, type, placeholder, color, errorText}) =>
   (<div className="TextField">
@@ -24,7 +24,22 @@ const TextField = ({onChange, type, placeholder, color, errorText}) =>
     />
   </div>)
 
-export default TextField
+export default styled(TextField)`
+  padding: 5px;
+
+  input {
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    font-size: 16px;
+    border-bottom: 1px solid; }
+
+  input[type="text"]::placeholder, input[type="password"]::placeholder {
+      color: #6272a4;
+      opacity: 0.2;
+  }
+`
 
 TextField.propTypes = {
   onChange: PropTypes.func,

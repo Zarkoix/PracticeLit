@@ -1,6 +1,7 @@
 
 # bytecode
 /out/
+/bin/
 
 # idea files
 *.iml

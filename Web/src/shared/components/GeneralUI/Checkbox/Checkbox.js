@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './Checkbox.css'
+import styled from 'styled-components'
 
 const Checkbox = props => {
   return (
@@ -30,7 +30,31 @@ const Checkbox = props => {
   )
 }
 
-export default Checkbox
+export default styled(Checkbox)`
+  display: inline;
+  position: relative;
+  width: 20px;
+  margin: 20px auto;
+  label {
+    position: absolute;
+    display: block;
+    width: 16px;
+    height: 16px;
+    top: -3px;
+    left: -3px;
+    cursor: pointer;
+
+    border-radius: 5px;
+    border: white 1px solid;
+    transition: all 0.25s ease-in-out;
+  }
+  input[type=checkbox] {
+    visibility: hidden;
+    &:checked + label {
+      background-color: white;
+    }
+  }
+`
 
 Checkbox.propTypes = {
   color: PropTypes.string,

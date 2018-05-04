@@ -1,11 +1,4 @@
 import React from 'react';
-import Loadable from 'react-loadable'
+import Directory from './Directory'
 
-const LoadableDirectory = Loadable({
-  loader: () => import(/* webpackChunkName: "directory" */ './Directory'),
-  loading() {
-    return <div />
-  }
-});
-
-export default LoadableDirectory
+export default Directory

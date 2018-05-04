@@ -5,6 +5,7 @@ const join = require('path').join;
 const extendedNodeExternals = require('../scripts/extended-node-externals');
 
 module.exports = merge(common, {
+    mode: 'production',
     target: 'node',
     externals: extendedNodeExternals,
     node: {

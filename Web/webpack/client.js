@@ -6,6 +6,7 @@ const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
+    mode: 'development',
     name: 'client',
     target: 'web',
     entry: [
@@ -17,37 +18,11 @@ module.exports = merge(common, {
         filename: '[name].client.js',
         chunkFilename: '[name].js'
     },
-    module: {
-        rules: [{
-            test: /\.styl$/,
-            exclude: /node_modules/,
-            use: ExtractCssChunks.extract({
-                use: [{
-                    loader: 'css-loader',
-                    options: {
-                        modules: true,
-                        localIdentName: '[name]__[local]--[hash:base64:5]'
-                    }
-                }, {
-                    loader: 'stylus-loader'
-                }]
-            })
-        }]
+    optimization: {
     },
     plugins: [
-        new ExtractCssChunks(),
-        new webpack.optimize.CommonsChunkPlugin({
-          names: ['bootstrap'], // needed to put webpack bootstrap code before chunks
-          filename: '[name].js',
-          minChunks: Infinity
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development')
-            }
-        }),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        // new BundleAnalyzerPlugin({ analyzerPort: 8888 })
+        new BundleAnalyzerPlugin({ analyzerPort: 8888 })
     ]
 });

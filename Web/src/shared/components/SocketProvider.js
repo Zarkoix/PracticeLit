@@ -42,7 +42,6 @@ class SocketProvider extends Component {
 
   componentDidMount () {
     if (!this.state.socketReady && this.canUseDOM()) { // see if we can use the dom (if we're client side or now)
-      console.log('prepare socket from mount')
       this.prepareSocket() //if we're client side we can fully prepare the socket
     }
   }
@@ -55,7 +54,6 @@ class SocketProvider extends Component {
 
       let s = 'ws://' + location.hostname + (location.port ? ':' + location.port : '');
 
-      console.log(s)
       const socket = new WebSocket(s)
       socket.registerType = this.registerType
 
@@ -81,7 +79,11 @@ class SocketProvider extends Component {
 
       socket.onmessage = (event) => {
         let data = JSON.parse(event.data)
-        this.types[data.type](data)
+        if (this.types[data.type]) {
+          this.types[data.type](data)
+        } else {
+          console.log('[WARN] no route exists for ws type ' + data.type)
+        }
       }
 
       socket.onclose = (err) => {
