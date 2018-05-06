@@ -26,7 +26,8 @@ Location and meta-data: **manifest.json**
     {
         "name": "Add 1",
         "id": "win2017add1",
-        "language": "java"
+        "language": "java",
+        "tests": "json",
         "location": "142/Winter 2017/Static Methods",
         "author": "Adam Towers",
         "dateCreated": "1356739200",

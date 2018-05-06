@@ -1,8 +1,10 @@
 # PraticeLit
 A modern version of PracticeIt designed to operate smoother and scale better
 
+# TODO:
+Issues/TODOs are being tracked in Airtable [here](https://airtable.com/shre2buNjdWjc5DML)
+
 # Architecture
-This repo contains the Client and NodeJS code.
 
 ![project diagram](Design/arch.png)
 
@@ -21,4 +23,4 @@ The application can be ran using docker-compose, to do this run:
   * `docker-compose up`
 
 ## More information
-see `README.md` in the `Web/` and `JavaTestRunner/` directories for their respective in depth instructions. 
+see `README.md` in the `Web/`, `Repository/`, and `JavaTestRunner/` directories for their respective instructions. 
