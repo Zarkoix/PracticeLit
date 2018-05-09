@@ -28,13 +28,17 @@ Run `./gradlew jar`
 The JTR (Java Test Runner) system has a few ways to test code, the name of which should be specified under `tests` in the test suite's `manifest.json`.
 
 ## JSON for Single Method Testing
-The JSON test suite definiton can be used to test singular Java methods with the `"tests": "json/method"` value.
+The JSON test suite definiton can be used to test singular Java methods with the `"tests": "java/jsonMethod"` value.
 
-The JSON schema for the specfication document, `spec.json`, is as follows
+The specification is written under the `testSpec` key in the `manifest.json` using the following schema:
 
     {
-        "requiredMethods": [method],
-        "testCases": [testCase]
+        ...
+        "testSpec": {
+            "requiredMethods": [method],
+            "testCases": [testCase]
+        }
+        ...
     }
 
 whereas the `method` scehma is
@@ -61,10 +65,12 @@ The JTR also enables testing via reference implementations, so test cases do not
 Implement `ReferenceImplementation` in `[testSuiteID].java` by providing a reference implementation and a `MethodSignature`, from there the JTR will fuzz random test cases based on the provided regex, and validate them on the ReferenceImplementation code.
 
 ### Providing Test Case Specifications
-Using a reference implementation is preferred as it allows for random test cases using regex. A `spec.json` must be provided which follows the schema below:
+Using a reference implementation is preferred as it allows for random test cases using regex. A `testSpecs` key must be provided in the `manifest.json` using the following schema:
 
     {
+        ...
         "testSpecs": [testSpec]
+        ...
     }
 
 whereas the `testSpec` schema is
